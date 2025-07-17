@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User, Image } from "lucide-react";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
-import GradientWrapper from "../../Components/Gradient/GradientWrapper";
+import GradientWrapper from "../../Components/Shared/Gradient/GradientWrapper";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,7 +17,7 @@ const RegisterForm = () => {
   const onSubmit = (data) => {
     console.log("Form Data:", data);
     // এখানে তুমি API call করতে পারো, যেমন Firebase বা তোমার backend এ
-    reset(); // সফল হলে ফর্ম রিসেট করতে পারো
+    reset();
   };
 
   return (
