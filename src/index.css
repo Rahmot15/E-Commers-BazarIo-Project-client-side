@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+@plugin "daisyui";
+
+.bitter-font {
+  font-family: "Bitter", serif;
+  font-weight: 500;
+}
+
+.parkinsans-font {
+  font-family: "Parkinsans", sans-serif;
+  font-weight: 500;
+}
