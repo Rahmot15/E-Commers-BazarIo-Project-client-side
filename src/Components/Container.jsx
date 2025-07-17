@@ -1,5 +1,6 @@
 import React from "react";
 import { Calendar, MapPin, Eye, Clock } from "lucide-react";
+import { Link } from "react-router";
 
 const Container = () => {
   const products = [
@@ -187,13 +188,13 @@ const Container = () => {
                 </div>
 
                 {/* View Details Button */}
-                <button
+                <Link to={'/productDetails'}
                   onClick={() => handleViewDetails(product.id)}
                   className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                 >
                   <Eye size={18} />
                   View Details
-                </button>
+                </Link>
               </div>
             </div>
           ))}
