@@ -1,0 +1,36 @@
+import React from "react";
+import banner from "../assets/banner.jpg";
+
+const Banner = () => {
+  return (
+    <div className="relative m-2 min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
+      {/* Centered Content */}
+      <div className="text-center max-w-2xl">
+        <h1 className="text-4xl bitter-font md:text-5xl font-bold text-gray-800 mb-4">
+          Fresh. Local. <br className="hidden md:block" /> Organic.
+        </h1>
+        <p className="text-gray-700 parkinsans-font mb-6 text-lg">
+          Shop our seasonal produce and pantry staples —{" "}
+          <br className="hidden md:block" />
+          harvested with love from the family farm.
+        </p>
+
+        <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium py-2 px-5 rounded-full shadow-md transition">
+          Shop Now
+        </button>
+      </div>
+
+      {/* Background Image Decoration */}
+      <img
+        src={banner}
+        alt="Vegetables"
+        className="absolute rounded-2xl inset-0 w-full h-full object-cover z-[-1]"
+      />
+
+      {/* Optional Overlay if needed */}
+      {/* <div className="absolute inset-0 bg-white bg-opacity-60 z-0"></div> */}
+    </div>
+  );
+};
+
+export default Banner;
