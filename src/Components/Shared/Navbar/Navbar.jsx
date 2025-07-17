@@ -53,7 +53,7 @@ const Navbar = () => {
   const links = (
     <>
       <NavLink
-        to="/products"
+        to="/allProducts"
         className={({ isActive }) =>
           `flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
             isActive
