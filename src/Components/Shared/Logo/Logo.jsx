@@ -7,7 +7,7 @@ const Logo = () => {
     <Link to={'/'} className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
       <img src={logoImg} className="w-9" />
 
-      <span className="text-2xl font-bold text-gray-800 hidden sm:block">
+      <span className="text-2xl font-bold text-neutral hidden sm:block">
         Bazario
       </span>
     </Link>

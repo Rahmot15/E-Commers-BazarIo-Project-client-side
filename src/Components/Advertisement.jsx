@@ -148,7 +148,7 @@ const Advertisement = () => {
       >
         {advertisements.map((ad) => (
           <SwiperSlide key={ad.id}>
-            <div className="relative w-full h-96 md:h-[500px]">
+            <div className="relative w-full  ">
               <img
                 src={ad.image}
                 alt={ad.title}
