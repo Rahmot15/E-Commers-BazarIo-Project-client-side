@@ -1,6 +1,7 @@
 import React from "react";
 import { Calendar, MapPin, Eye, Clock } from "lucide-react";
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 
 const Container = () => {
   const products = [
@@ -126,9 +127,19 @@ const Container = () => {
 
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
-            <div
+          {products.map((product, index) => (
+            <motion.div
               key={product.id}
+              initial={{ opacity: 0, scale: 0.95, y: 40 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+                duration: 0.6,
+                delay: index * 0.1,
+              }}
               className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200"
             >
               {/* Product Image */}
@@ -188,7 +199,8 @@ const Container = () => {
                 </div>
 
                 {/* View Details Button */}
-                <Link to={'/productDetails'}
+                <Link
+                  to={"/productDetails"}
                   onClick={() => handleViewDetails(product.id)}
                   className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                 >
@@ -196,7 +208,7 @@ const Container = () => {
                   View Details
                 </Link>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

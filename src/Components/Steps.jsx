@@ -1,5 +1,7 @@
 import { ShoppingBasket, Truck, HeartHandshake } from "lucide-react";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 const steps = [
   {
     icon: <ShoppingBasket className="w-12 h-12 text-green-800" />,
@@ -21,6 +23,13 @@ const steps = [
   },
 ];
 const Steps = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  }, []);
+
   return (
     <section className="bg-[#525a3a] py-16 px-2">
       <div className="max-w-6xl mx-auto text-center">
@@ -33,7 +42,11 @@ const Steps = () => {
               key={idx}
               className="flex flex-col items-center w-full md:w-1/3"
             >
-              <div className="relative mb-6">
+              <div
+                data-aos="fade-down"
+                data-aos-offset="100"
+                className="relative mb-6"
+              >
                 <img
                   src={step.img}
                   alt={step.title}
@@ -46,10 +59,15 @@ const Steps = () => {
                   {step.icon}
                 </span>
               </div>
-              <h3 className="text-2xl font-semibold text-[#fffbe7] mb-3">
-                {step.title}
-              </h3>
-              <p className="text-[#fffbe7] opacity-90 text-base">{step.desc}</p>
+
+              <div data-aos="fade-up" data-aos-offset="100">
+                <h3 className="text-2xl font-semibold text-[#fffbe7] mb-3">
+                  {step.title}
+                </h3>
+                <p className="text-[#fffbe7] opacity-90 text-base">
+                  {step.desc}
+                </p>
+              </div>
             </div>
           ))}
         </div>

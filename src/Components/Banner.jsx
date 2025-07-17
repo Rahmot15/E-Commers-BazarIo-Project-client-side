@@ -1,11 +1,17 @@
 import React from "react";
 import banner from "../assets/banner.jpg";
+import { motion } from "framer-motion";
 
 const Banner = () => {
   return (
     <div className="relative m-2 min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
       {/* Centered Content */}
-      <div className="text-center max-w-2xl">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+        className="text-center max-w-2xl"
+      >
         <h1 className="text-4xl bitter-font md:text-5xl font-bold text-gray-800 mb-4">
           Fresh. Local. <br className="hidden md:block" /> Organic.
         </h1>
@@ -18,7 +24,7 @@ const Banner = () => {
         <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium py-2 px-5 rounded-full shadow-md transition">
           Shop Now
         </button>
-      </div>
+      </motion.div>
 
       {/* Background Image Decoration */}
       <img
