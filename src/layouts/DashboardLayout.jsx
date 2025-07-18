@@ -12,7 +12,7 @@ const DashboardLayout = () => {
       <div className="flex-1 md:ml-64">
         <div className="p-4 md:p-6">
           {/* Page Content Render Here */}
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl p-6">
+          <div className="md:mt-0 mt-16">
             <Outlet />
           </div>
         </div>
