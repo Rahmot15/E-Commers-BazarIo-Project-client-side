@@ -34,24 +34,24 @@ const WatchList = () => {
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-xl p-4">
-      <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-white/5">
-        <table className="min-w-[600px] w-full text-sm">
+    <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="table w-full">
           <thead>
             <tr className="bg-white/5 border-b border-white/10">
-              <th className="text-gray-100 font-semibold text-left px-4 py-3">
+              <th className="text-gray-100 font-semibold text-left px-6 py-4">
                 Product Name
               </th>
-              <th className="text-gray-100 font-semibold text-left px-4 py-3">
+              <th className="text-gray-100 font-semibold text-left px-6 py-4">
                 Market Name
               </th>
-              <th className="text-gray-100 font-semibold text-left px-4 py-3">
+              <th className="text-gray-100 font-semibold text-left px-6 py-4">
                 Date
               </th>
-              <th className="text-gray-100 font-semibold text-center px-4 py-3">
+              <th className="text-gray-100 font-semibold text-center px-6 py-4">
                 Add More
               </th>
-              <th className="text-gray-100 font-semibold text-center px-4 py-3">
+              <th className="text-gray-100 font-semibold text-center px-6 py-4">
                 Remove
               </th>
             </tr>
