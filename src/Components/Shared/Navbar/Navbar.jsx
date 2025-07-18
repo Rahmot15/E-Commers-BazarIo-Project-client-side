@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Menu,
   X,
@@ -16,6 +16,26 @@ import { Link, NavLink } from "react-router";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  // Scroll Hide/Show Navbar Logic
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setShowNavbar(false); // hide when scrolling down
+      } else {
+        setShowNavbar(true); // show when scrolling up
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   // Mock user state - you can replace this with actual authentication logic
   const [user, setUser] = useState({
@@ -55,10 +75,10 @@ const Navbar = () => {
       <NavLink
         to="/allProducts"
         className={({ isActive }) =>
-          `flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+          `flex items-center space-x-2 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200 ${
             isActive
               ? "text-primary bg-gray-100"
-              : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              : "text-black hover:text-blue-600 hover:bg-gray-50"
           }`
         }
       >
@@ -69,7 +89,11 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 bg-white/10 backdrop-blur-lg border-b border-white/10 ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left Section - Logo & Brand */}
@@ -82,7 +106,8 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {/* User not logged in */}
             {!user && (
-              <Link to={'/login'}
+              <Link
+                to={"/login"}
                 onClick={handleLogin}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-2"
               >
@@ -109,9 +134,7 @@ const Navbar = () => {
                       <User className="h-4 w-4 text-white" />
                     )}
                   </div>
-                  <span className="hidden sm:block font-medium">
-                    {user.name}
-                  </span>
+
                   <ChevronDown
                     className={`h-4 w-4 transition-transform duration-200 ${
                       dropdownOpen ? "rotate-180" : ""
@@ -122,8 +145,8 @@ const Navbar = () => {
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-10">
-                    <Link to={"/dashboard"}
-
+                    <Link
+                      to={"/dashboard"}
                       className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                     >
                       <Home className="h-4 w-4" />
@@ -161,9 +184,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {links}
-          </div>
+          <div className="px-2 pt-2 pb-3 space-y-1">{links}</div>
         </div>
       )}
     </nav>

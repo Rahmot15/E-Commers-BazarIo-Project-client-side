@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const Banner = () => {
   return (
-    <div className="relative m-2 min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
+    <div className="relative  min-h-screen flex items-center justify-center">
       {/* Centered Content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -30,7 +30,7 @@ const Banner = () => {
       <img
         src={banner}
         alt="Vegetables"
-        className="absolute rounded-2xl inset-0 w-full h-full object-cover z-[-1]"
+        className="absolute inset-0 w-full h-full object-cover z-[-1]"
       />
 
       {/* Optional Overlay if needed */}
