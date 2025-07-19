@@ -34,7 +34,7 @@ const WatchList = () => {
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl overflow-hidden">
+    <div className="bg-white/10 max-w-6xl mx-auto backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>

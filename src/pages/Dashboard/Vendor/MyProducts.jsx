@@ -87,7 +87,7 @@ const MyProducts = () => {
   };
 
   return (
-    <div className="lg:p-6">
+    <div className="max-w-6xl mx-auto">
       <div className="">
         {/* Header */}
         <div className="mb-8 text-center">
