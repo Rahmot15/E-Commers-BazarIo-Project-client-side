@@ -12,12 +12,17 @@ import {
 } from "lucide-react";
 import Logo from "../Logo/Logo";
 import { Link, NavLink } from "react-router";
+import useAuth from "../../../hooks/useAuth";
+import { auth } from "../../../firebase/firebase.config";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
+  const { user, signOutUser } = useAuth();
+  console.log("User Image URL:", user?.photoURL);
 
   // Scroll Hide/Show Navbar Logic
   useEffect(() => {
@@ -37,13 +42,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // Mock user state - you can replace this with actual authentication logic
-  const [user, setUser] = useState({
-    name: "John Doe",
-    role: "user", // can be 'admin', 'vendor', 'user'
-    avatar: null,
-  });
-
   // Toggle mobile menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -56,18 +54,14 @@ const Navbar = () => {
 
   // Handle logout
   const handleLogout = () => {
-    setUser(null);
+    signOutUser(auth)
+      .then((result) => {
+        console.log(result);
+      })
+      .then((error) => {
+        console.log(error);
+      });
     setDropdownOpen(false);
-    // Add logout logic here
-  };
-
-  // Handle login (for demo purposes)
-  const handleLogin = () => {
-    setUser({
-      name: "John Doe",
-      role: "user",
-      avatar: null,
-    });
   };
 
   const links = (
@@ -108,7 +102,6 @@ const Navbar = () => {
             {!user && (
               <Link
                 to={"/login"}
-                onClick={handleLogin}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center space-x-2"
               >
                 <User className="h-4 w-4" />
@@ -121,22 +114,20 @@ const Navbar = () => {
               <div className="relative">
                 <button
                   onClick={toggleDropdown}
-                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg p-2 transition-colors duration-200"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 focus:outline-none rounded-lg p-2 transition"
                 >
-                  <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                    {user.avatar ? (
-                      <img
-                        src={user.avatar}
-                        alt="Profile"
-                        className="h-8 w-8 rounded-full"
-                      />
-                    ) : (
-                      <User className="h-4 w-4 text-white" />
-                    )}
-                  </div>
+                  {user?.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt="User"
+                      className="avatar h-9 w-9 ring-primary ring-offset-base-100  rounded-full ring-2 ring-offset-2"
+                    />
+                  ) : (
+                    <User className="h-8 w-8 text-gray-600" />
+                  )}
 
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform duration-200 ${
+                    className={`h-6 w-6 transition-transform duration-200 ${
                       dropdownOpen ? "rotate-180" : ""
                     }`}
                   />
