@@ -6,7 +6,6 @@ import LoginForm from "../pages/Login/LoginForm";
 import RegisterForm from "../pages/Register/RegisterForm";
 import ProductDetails from "../pages/ProductDetails";
 import DashboardLayout from "../layouts/DashboardLayout";
-import Statistics from "../pages/Dashboard/Common/Dashboard";
 import PriceTrend from "../pages/Dashboard/User/PriceTrend";
 import WatchList from "../pages/Dashboard/User/WatchList";
 import MyOrders from "../pages/Dashboard/User/MyOrders";
@@ -19,6 +18,7 @@ import AllProduct from "../pages/Dashboard/Admin/AllProduct";
 import AllAds from "../pages/Dashboard/Admin/AllAds";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
+import Dashboard from "../pages/Dashboard/Common/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Statistics />,
+        element: <Dashboard />,
       },
       // User Dashboard Routes
       {
