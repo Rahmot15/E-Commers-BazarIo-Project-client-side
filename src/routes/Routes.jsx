@@ -6,7 +6,7 @@ import LoginForm from "../pages/Login/LoginForm";
 import RegisterForm from "../pages/Register/RegisterForm";
 import ProductDetails from "../pages/ProductDetails";
 import DashboardLayout from "../layouts/DashboardLayout";
-import Statistics from "../pages/Dashboard/Common/Statistics";
+import Statistics from "../pages/Dashboard/Common/Dashboard";
 import PriceTrend from "../pages/Dashboard/User/PriceTrend";
 import WatchList from "../pages/Dashboard/User/WatchList";
 import MyOrders from "../pages/Dashboard/User/MyOrders";

@@ -12,6 +12,7 @@ import {
   FaBullhorn,
   FaUsers,
   FaSignOutAlt,
+  FaHome,
 } from "react-icons/fa";
 import Logo from "../../../Shared/Logo/Logo";
 
@@ -60,6 +61,9 @@ const SidebarContent = ({ onClose }) => {
         </div>
 
         <nav className="mt-4 flex flex-col gap-1 px-4">
+          <NavLink to="/dashboard" end className={linkClass} onClick={onClose}>
+            <FaHome /> Home
+          </NavLink>
           <h2 className="text-gray-400 uppercase text-xs mt-4 mb-1">
             👤 User Panel
           </h2>
