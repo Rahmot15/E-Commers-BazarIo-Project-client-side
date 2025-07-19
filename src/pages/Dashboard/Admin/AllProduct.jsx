@@ -210,10 +210,10 @@ const AllProduct = () => {
             </div>
             <div>
               <h1 className="text-3xl font-bold text-base-content">
-                📋 All Products
+                All Products
               </h1>
               <p className="text-base-content/70">
-                সকল vendor এর products management
+                Product management of all vendors
               </p>
             </div>
           </div>
