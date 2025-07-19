@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User, Image } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import GradientWrapper from "../../Components/Shared/Gradient/GradientWrapper";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { FcGoogle } from "react-icons/fc";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { createUser, signInGoogle } = useAuth()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -14,15 +20,59 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const handleRegister = (data) => {
     console.log("Form Data:", data);
     // এখানে তুমি API call করতে পারো, যেমন Firebase বা তোমার backend এ
-    reset();
+    // reset();
+
+    createUser(data.email, data.password)
+      .then((result) => {
+        console.log(result);
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Register successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Register failed: " + error.message);
+      });
   };
+
+  const handleGoogle = () => {
+    signInGoogle()
+      .then((result) => {
+        console.log(result);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Register successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Login failed: " + error.message);
+      });
+  };
+
+  // const onSubmit = (data) => {
+  //   console.log("Form Data:", data);
+  //   // এখানে তুমি API call করতে পারো, যেমন Firebase বা তোমার backend এ
+  //   reset();
+  // };
 
   return (
     <GradientWrapper>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(handleRegister)} className="space-y-6">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-2">
             Join Us
@@ -145,8 +195,11 @@ const RegisterForm = () => {
             </div>
           </div>
 
-          <button className="w-full mt-4 inline-flex justify-center py-2 px-4 border border-gray-600 rounded-lg bg-gray-700/50 text-sm font-medium text-gray-300 hover:bg-gray-600/50 transition-colors">
-            Google
+          <button
+            onClick={handleGoogle}
+            className="w-full mt-4 flex gap-2 justify-center py-2 px-4 border border-gray-600 rounded-lg bg-gray-700/50 text-sm font-medium text-gray-300 hover:bg-gray-600/50 transition-colors"
+          >
+            <FcGoogle size={20} /> Google
           </button>
         </div>
       </form>
