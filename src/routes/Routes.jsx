@@ -17,9 +17,9 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AllProduct from "../pages/Dashboard/Admin/AllProduct";
 import AllAds from "../pages/Dashboard/Admin/AllAds";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
-import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
 import Dashboard from "../pages/Dashboard/Common/Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +43,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+
     ],
   },
   {
@@ -101,20 +102,23 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "update-products",
-        element: (
-          <PrivateRoute>
-            <UpdateProduct />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: "my-products",
         element: (
           <PrivateRoute>
             <MyProducts />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/dashboard/updateProduct/:id",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <UpdateProduct />{" "}
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/products/${params.id}`),
       },
       {
         path: "add-ad",

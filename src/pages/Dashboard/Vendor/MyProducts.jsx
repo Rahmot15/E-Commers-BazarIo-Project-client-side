@@ -10,11 +10,14 @@ import {
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyProducts = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const {
     data: products = [],
@@ -24,11 +27,35 @@ const MyProducts = () => {
   } = useQuery({
     queryKey: ["my-products", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/products?email=${user.email}`);
+      const res = await axiosSecure.get(`/VendorsProducts?email=${user.email}`);
       return res.data;
     },
     enabled: !!user?.email,
   });
+
+
+  const handleDelete = async (id) => {
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+  });
+
+  if (result.isConfirmed) {
+    try {
+      await axiosSecure.delete(`/products/${id}`);
+      Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+      queryClient.invalidateQueries(["my-products", user?.email]);
+    } catch (error) {
+      Swal.fire('Error!', 'Failed to delete the product.', 'error');
+      console.error(error);
+    }
+  }
+};
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -130,10 +157,10 @@ const MyProducts = () => {
                     </td>
                     <td className="p-4 text-center">
                       <div className="flex gap-2 justify-center">
-                        <button className="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300">
+                        <Link to={`/dashboard/updateProduct/${product._id}`} className="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300">
                           <Edit className="w-4 h-4" />
-                        </button>
-                        <button className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300">
+                        </Link>
+                        <button onClick={() => handleDelete(product._id)} className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>

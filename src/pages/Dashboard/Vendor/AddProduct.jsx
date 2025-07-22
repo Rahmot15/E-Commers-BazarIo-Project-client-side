@@ -22,7 +22,8 @@ const AddProduct = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
-    vendorName: "",
+    vendorEmail: user?.email,
+    vendorName: user?.displayName,
     marketName: "",
     date: new Date().toISOString().split("T")[0],
     marketDescription: "",
@@ -31,6 +32,7 @@ const AddProduct = () => {
     status: "pending",
     itemDescription: "",
   });
+  console.log(uploading);
 
   const [historicalPrices, setHistoricalPrices] = useState([
     { price: "", date: "" },
@@ -131,7 +133,7 @@ const AddProduct = () => {
         console.log(data);
         // Reset form here
         setFormData({
-          vendorName: "John Doe Farms",
+
           marketName: "",
           date: new Date().toISOString().split("T")[0],
           marketDescription: "",
@@ -173,7 +175,8 @@ const AddProduct = () => {
                 </label>
                 <input
                   type="email"
-                  value={user?.email || ""}
+                  name="vendorEmail"
+                  value={formData.vendorEmail}
                   readOnly
                   className="input input-bordered w-full bg-white/10 border-white/20 text-white placeholder-gray-300 focus:border-purple-400 focus:bg-white/20 backdrop-blur-sm"
                 />
@@ -188,7 +191,7 @@ const AddProduct = () => {
                 <input
                   type="text"
                   name="vendorName"
-                  value={user?.displayName || ""}
+                  value={formData.vendorName}
                   readOnly
                   className="input input-bordered w-full bg-white/10 border-white/20 text-white placeholder-gray-300 focus:border-purple-400 focus:bg-white/20 backdrop-blur-sm"
                 />
