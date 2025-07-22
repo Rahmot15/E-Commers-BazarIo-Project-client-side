@@ -57,14 +57,14 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout></DashboardLayout>,
     children: [
-      {
-        index: true,
-        element: (
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        ),
-      },
+      // {
+      //   index: true,
+      //   element: (
+      //     <PrivateRoute>
+      //       <Dashboard />
+      //     </PrivateRoute>
+      //   ),
+      // },
       // User Dashboard Routes
       {
         path: "price-trend",

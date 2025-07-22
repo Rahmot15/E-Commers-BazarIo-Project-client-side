@@ -14,9 +14,9 @@ const AdminMenu = ({ linkClass, onClose }) => {
         🛠️ Admin Panel
       </h2>
 
-      <NavLink to="/dashboard" end className={linkClass} onClick={onClose}>
+      {/* <NavLink to="/dashboard" end className={linkClass} onClick={onClose}>
         <FaHome /> Home
-      </NavLink>
+      </NavLink> */}
 
       <NavLink
         to="/dashboard/all-users"

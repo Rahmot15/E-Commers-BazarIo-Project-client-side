@@ -4,9 +4,9 @@ import { FaHome, FaChartLine, FaHeart, FaShoppingCart } from "react-icons/fa";
 const CustomerMenu = ({ linkClass, onClose }) => {
   return (
     <>
-      <NavLink to="/dashboard" end className={linkClass} onClick={onClose}>
+      {/* <NavLink to="/dashboard" end className={linkClass} onClick={onClose}>
         <FaHome /> Home
-      </NavLink>
+      </NavLink> */}
       <h2 className="text-gray-400 uppercase text-xs mt-4 mb-1">
         👤 User Panel
       </h2>
