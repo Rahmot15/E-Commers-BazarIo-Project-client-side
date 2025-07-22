@@ -19,6 +19,7 @@ import AllAds from "../pages/Dashboard/Admin/AllAds";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
 import Dashboard from "../pages/Dashboard/Common/Dashboard";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -35,7 +36,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/productDetails",
-        Component: ProductDetails,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <ProductDetails />{" "}
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -53,60 +59,113 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
       // User Dashboard Routes
       {
         path: "price-trend",
-        element: <PriceTrend />,
+        element: (
+          <PrivateRoute>
+            <PriceTrend />
+          </PrivateRoute>
+        ),
       },
       {
         path: "watchList",
-        element: <WatchList />,
+        element: (
+          <PrivateRoute>
+            <WatchList />
+          </PrivateRoute>
+        ),
       },
       {
         path: "orders",
-        element: <MyOrders />,
+        element: (
+          <PrivateRoute>
+            <MyOrders />
+          </PrivateRoute>
+        ),
       },
 
       // Vendor Dashboard Routes
       {
         path: "add-product",
-        element: <AddProduct />,
+        element: (
+          <PrivateRoute>
+            <AddProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "update-products",
-        element: <UpdateProduct />,
+        element: (
+          <PrivateRoute>
+            <UpdateProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-products",
-        element: <MyProducts />,
+        element: (
+          <PrivateRoute>
+            <MyProducts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "add-ad",
-        element: <AddAdvertisement />,
+        element: (
+          <PrivateRoute>
+            <AddAdvertisement />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-ads",
-        element: <MyAdvertisements />,
+        element: (
+          <PrivateRoute>
+            <MyAdvertisements />
+          </PrivateRoute>
+        ),
       },
 
       // Admin Dashboard Routes
       {
         path: "all-users",
-        element: <AllUsers />,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AllUsers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-products",
-        element: <AllProduct />,
+        element: (
+          <PrivateRoute>
+            <AllProduct />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-ads",
-        element: <AllAds />,
+        element: (
+          <PrivateRoute>
+            <AllAds />
+          </PrivateRoute>
+        ),
       },
       {
         path: "all-orders",
-        element: <AllOrders />,
+        element: (
+          <PrivateRoute>
+            <AllOrders />
+          </PrivateRoute>
+        ),
       },
     ],
   },
