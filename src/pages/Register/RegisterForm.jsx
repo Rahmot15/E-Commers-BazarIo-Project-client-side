@@ -23,7 +23,7 @@ const RegisterForm = () => {
   const handleRegister = (data) => {
     console.log("Form Data:", data);
     // এখানে তুমি API call করতে পারো, যেমন Firebase বা তোমার backend এ
-    // reset();
+    reset();
 
     createUser(data.email, data.password)
       .then((result) => {
