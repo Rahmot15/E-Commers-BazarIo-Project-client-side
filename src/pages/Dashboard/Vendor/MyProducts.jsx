@@ -7,56 +7,28 @@ import {
   XCircle,
   AlertTriangle,
 } from "lucide-react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import { useQuery } from "@tanstack/react-query";
 
 const MyProducts = () => {
-  const products = [
-    {
-      id: 1,
-      item: "Premium Wireless Headphones",
-      price: 299.99,
-      market: "Electronics",
-      date: "2024-07-15",
-      status: "approved",
-      feedback: null,
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["my-products", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/products?email=${user.email}`);
+      return res.data;
     },
-    {
-      id: 2,
-      item: "Smart Fitness Watch",
-      price: 199.99,
-      market: "Wearables",
-      date: "2024-07-10",
-      status: "pending",
-      feedback: null,
-    },
-    {
-      id: 3,
-      item: "Organic Cotton T-Shirt",
-      price: 29.99,
-      market: "Fashion",
-      date: "2024-07-08",
-      status: "rejected",
-      feedback:
-        "Product description needs more details about material sourcing",
-    },
-    {
-      id: 4,
-      item: "Bamboo Phone Case",
-      price: 24.99,
-      market: "Accessories",
-      date: "2024-07-12",
-      status: "approved",
-      feedback: null,
-    },
-    {
-      id: 5,
-      item: "Artisan Coffee Beans",
-      price: 18.99,
-      market: "Food & Beverage",
-      date: "2024-07-14",
-      status: "pending",
-      feedback: null,
-    },
-  ];
+    enabled: !!user?.email,
+  });
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -86,13 +58,27 @@ const MyProducts = () => {
     }
   };
 
+  if (isLoading) {
+    return <LoadingSpinner/>
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center text-red-500">
+        Error loading products: {error.message}
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto">
       <div className="">
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white mb-2">My Products</h1>
-          <p className="text-purple-200">Static list of product listings</p>
+          <p className="text-purple-200">
+            List of products you have submitted
+          </p>
         </div>
 
         {/* Products Table */}
@@ -103,7 +89,9 @@ const MyProducts = () => {
                 <tr className="bg-white/20 text-white">
                   <th className="text-left p-4 font-semibold">Item</th>
                   <th className="text-left p-4 font-semibold">Price</th>
-                  <th className="text-left p-4 font-semibold hidden lg:block ">Market</th>
+                  <th className="text-left p-4 font-semibold hidden lg:block ">
+                    Market
+                  </th>
                   <th className="text-left p-4 font-semibold">Date</th>
                   <th className="text-left p-4 font-semibold">Status</th>
                   <th className="text-center p-4 font-semibold">Actions</th>
@@ -112,16 +100,18 @@ const MyProducts = () => {
               <tbody>
                 {products.map((product) => (
                   <tr
-                    key={product.id}
+                    key={product._id}
                     className="hover:bg-white/10 transition-colors duration-200 border-b border-white/10"
                   >
                     <td className="p-4 text-white font-medium">
-                      {product.item}
+                      {product.itemName}
                     </td>
                     <td className="p-4 text-green-300 font-semibold">
-                      ${product.price}
+                      ৳{product.pricePerUnit}
                     </td>
-                    <td className="p-4 text-purple-200 hidden lg:block ">{product.market}</td>
+                    <td className="p-4 text-purple-200 hidden lg:block ">
+                      {product.marketName}
+                    </td>
                     <td className="p-4 text-blue-200">{product.date}</td>
                     <td className="p-4">
                       <div className="flex flex-col gap-2 w-28">
@@ -150,6 +140,13 @@ const MyProducts = () => {
                     </td>
                   </tr>
                 ))}
+                {products.length === 0 && (
+                  <tr>
+                    <td colSpan="6" className="text-center p-8 text-white">
+                      No products found for your account.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
