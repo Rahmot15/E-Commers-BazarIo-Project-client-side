@@ -33,6 +33,7 @@ export const router = createBrowserRouter([
       {
         path: "/allProducts",
         Component: AllProducts,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/products`)
       },
       {
         path: "/productDetails",
