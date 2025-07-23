@@ -190,7 +190,7 @@ const AllProducts = () => {
 
                 {/* View Details Button */}
                 <Link
-                  to={"/productDetails"}
+                  to={`/productDetails/${product._id}`}
                   className="w-full mt-4 flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   <Eye className="w-4 h-4" />

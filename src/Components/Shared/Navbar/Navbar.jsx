@@ -22,7 +22,7 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const { user, signOutUser } = useAuth();
-  console.log("User Image URL:", user?.photoURL);
+  // console.log("User Image URL:", user?.photoURL);
 
   // Scroll Hide/Show Navbar Logic
   useEffect(() => {
