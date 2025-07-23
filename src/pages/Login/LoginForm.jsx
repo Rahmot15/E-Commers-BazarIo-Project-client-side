@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
+import { saveUserInDb } from "../../api/utils";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,7 +26,7 @@ const LoginForm = () => {
   const onSubmit = (data) => {
     const { email, password } = data;
     signInUser(email, password)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result);
         Swal.fire({
           position: "center",
@@ -34,6 +35,14 @@ const LoginForm = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+
+        const userData = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          image: result?.user?.photoURL,
+        };
+        await saveUserInDb(userData);
+
         reset();
         navigate(from, { replace: true });
       })
@@ -45,7 +54,7 @@ const LoginForm = () => {
 
   const handleGoogle = () => {
     signInGoogle()
-      .then((result) => {
+      .then(async (result) => {
         console.log(result);
         Swal.fire({
           position: "center",
@@ -54,6 +63,14 @@ const LoginForm = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+
+        const userData = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          image: result?.user?.photoURL,
+        };
+        await saveUserInDb(userData);
+
         navigate(from, { replace: true });
       })
       .catch((error) => {
@@ -90,7 +107,9 @@ const LoginForm = () => {
             className="w-full pl-10 pr-4 py-3 bg-gray-700/50 border border-gray-600/50 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
           />
           {errors.email && (
-            <p className="text-sm text-red-400 mt-1 ml-2">{errors.email.message}</p>
+            <p className="text-sm text-red-400 mt-1 ml-2">
+              {errors.email.message}
+            </p>
           )}
         </div>
 
@@ -116,10 +135,16 @@ const LoginForm = () => {
             onClick={() => setShowPassword(!showPassword)}
             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
           >
-            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            {showPassword ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
           </button>
           {errors.password && (
-            <p className="text-sm text-red-400 mt-1 ml-2">{errors.password.message}</p>
+            <p className="text-sm text-red-400 mt-1 ml-2">
+              {errors.password.message}
+            </p>
           )}
         </div>
 
@@ -162,7 +187,9 @@ const LoginForm = () => {
             <div className="w-full border-t border-gray-600"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-gray-800 text-gray-400">Or continue with</span>
+            <span className="px-2 bg-gray-800 text-gray-400">
+              Or continue with
+            </span>
           </div>
         </div>
 

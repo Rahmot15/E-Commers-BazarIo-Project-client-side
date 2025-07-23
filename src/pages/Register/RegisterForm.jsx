@@ -7,10 +7,11 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
+import { saveUserInDb } from "../../api/utils";
 
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createUser, signInGoogle } = useAuth()
+  const { createUser, signInGoogle } = useAuth();
   const navigate = useNavigate();
 
   const {
@@ -26,7 +27,7 @@ const RegisterForm = () => {
     reset();
 
     createUser(data.email, data.password)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result);
 
         Swal.fire({
@@ -36,6 +37,13 @@ const RegisterForm = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+
+        const userData = {
+          name: data?.name,
+          email: data?.email,
+          image: data?.photoURL,
+        };
+        await saveUserInDb(userData);
 
         navigate("/");
       })
@@ -47,7 +55,7 @@ const RegisterForm = () => {
 
   const handleGoogle = () => {
     signInGoogle()
-      .then((result) => {
+      .then(async (result) => {
         console.log(result);
         Swal.fire({
           position: "center",
@@ -56,6 +64,14 @@ const RegisterForm = () => {
           showConfirmButton: false,
           timer: 1500,
         });
+
+        const userData = {
+          name: result?.user?.displayName,
+          email: result?.user?.email,
+          image: result?.user?.photoURL,
+        };
+        await saveUserInDb(userData);
+
         navigate("/");
       })
       .catch((error) => {
