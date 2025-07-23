@@ -26,12 +26,15 @@ import { toast } from "react-toastify";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import PurchaseModal from "../Components/Modal/PurchaseModal";
 
 const ProductDetails = () => {
   const products = useLoaderData();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -108,13 +111,6 @@ const ProductDetails = () => {
     setIsInWatchlist(!isInWatchlist);
   };
 
-  const handleBuyProduct = () => {
-    toast.info("Redirecting to payment gateway...");
-    setTimeout(() => {
-      toast.success("Payment successful! Purchase saved to database.");
-    }, 2000);
-  };
-
   return (
     <GradientAll>
       <div className="max-w-6xl my-12 mx-auto relative z-10">
@@ -166,12 +162,18 @@ const ProductDetails = () => {
                 </button>
 
                 <button
-                  onClick={handleBuyProduct}
-                  className="btn bg-green-500 hover:bg-green-600 text-white border-none"
+                  onClick={() => setIsModalOpen(true)}
+                  disabled={isDisabled}
+                  className="btn bg-green-500 hover:bg-green-600 text-white border-none disabled:opacity-50"
                 >
-                  <ShoppingCart className="w-5 h-5" />
                   Buy Product
                 </button>
+
+                <PurchaseModal
+                  isOpen={isModalOpen}
+                  setIsOpen={setIsModalOpen}
+                  product={products}
+                />
               </div>
             </div>
           </div>

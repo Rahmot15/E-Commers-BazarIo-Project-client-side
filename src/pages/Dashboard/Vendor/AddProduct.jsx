@@ -120,7 +120,11 @@ const AddProduct = () => {
 
       const productData = {
         ...formData,
-        historicalPrices,
+        pricePerUnit: parseFloat(formData.pricePerUnit),
+        historicalPrices: historicalPrices.map((item) => ({
+          ...item,
+          price: parseFloat(item.price), // 👈 also convert historical price
+        })),
         image: uploadedImageUrl,
       };
 
@@ -133,7 +137,6 @@ const AddProduct = () => {
         console.log(data);
         // Reset form here
         setFormData({
-
           marketName: "",
           date: new Date().toISOString().split("T")[0],
           marketDescription: "",
