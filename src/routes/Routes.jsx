@@ -20,6 +20,7 @@ import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 import Dashboard from "../pages/Dashboard/Common/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
+import Profile from "../pages/Dashboard/Common/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -33,7 +34,7 @@ export const router = createBrowserRouter([
       {
         path: "/allProducts",
         Component: AllProducts,
-        loader: () => fetch(`${import.meta.env.VITE_API_URL}/products`)
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/products`),
       },
       {
         path: "/productDetails/:id",
@@ -43,9 +44,9 @@ export const router = createBrowserRouter([
             <ProductDetails />{" "}
           </PrivateRoute>
         ),
-        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/products/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/products/${params.id}`),
       },
-
     ],
   },
   {
@@ -68,6 +69,14 @@ export const router = createBrowserRouter([
       //     </PrivateRoute>
       //   ),
       // },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
       // User Dashboard Routes
       {
         path: "price-trend",

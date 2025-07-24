@@ -1,6 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { FaBars, FaUser, FaSignOutAlt } from "react-icons/fa";
 import Logo from "../../Shared/Logo/Logo";
 import SellerMenu from "./Menu/SellerMenu";
@@ -8,6 +8,10 @@ import AdminMenu from "./Menu/AdminMenu";
 import CustomerMenu from "./Menu/CustomerMenu";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
+import useAuth from "../../../hooks/useAuth";
+import { auth } from "../../../firebase/firebase.config";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +50,33 @@ const Sidebar = () => {
 
 const SidebarContent = ({ onClose }) => {
   const [role, isRoleLoading] = useRole();
+  const navigate = useNavigate();
+  const { signOutUser } = useAuth();
+
+  // Handle logout
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signOutUser(auth)
+          .then(() => {
+            toast.success("Logged out successfully!");
+            navigate("/");
+          })
+          .catch((error) => {
+            console.error("Logout error:", error);
+            toast.error("Failed to logout. Please try again.");
+          });
+      }
+    });
+  };
   if (isRoleLoading) return <LoadingSpinner />;
   return (
     <>
@@ -68,10 +99,13 @@ const SidebarContent = ({ onClose }) => {
       </div>
 
       <div className="px-4 py-3 border-t border-white/20">
-        <NavLink to="" className={linkClass} onClick={onClose}>
+        <NavLink to="profile" className={linkClass} onClick={onClose}>
           <FaUser /> Profile
         </NavLink>
-        <button className="w-full flex items-center gap-2 px-3 py-2 mt-2 rounded-lg text-gray-300 hover:bg-white/20 transition">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-2 px-3 py-2 mt-2 rounded-lg text-gray-300 hover:bg-white/20 transition"
+        >
           <FaSignOutAlt /> Logout
         </button>
       </div>

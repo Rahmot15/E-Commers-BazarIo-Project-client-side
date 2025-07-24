@@ -14,6 +14,7 @@ import Logo from "../Logo/Logo";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { auth } from "../../../firebase/firebase.config";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,11 +56,12 @@ const Navbar = () => {
   // Handle logout
   const handleLogout = () => {
     signOutUser(auth)
-      .then((result) => {
-        console.log(result);
+      .then(() => {
+        toast.success("Logged out successfully!");
       })
-      .then((error) => {
-        console.log(error);
+      .catch((error) => {
+        console.error("Logout error:", error);
+        toast.error("Failed to logout. Please try again.");
       });
     setDropdownOpen(false);
   };
