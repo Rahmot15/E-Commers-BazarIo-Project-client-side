@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Edit, Trash2, CheckCircle, Clock, XCircle } from "lucide-react";
-import { toast } from "react-toastify";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
 
 const MyAdvertisements = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
 
   const { data: advertisements = [], isLoading, isError } = useQuery({
-    queryKey: ["myAdvertisements"],
+    queryKey: ["myAdvertisements", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get("/advertisements");
       return res.data;
@@ -19,10 +22,28 @@ const MyAdvertisements = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
 
-  const handleDelete = () => {
-    // Implement delete logic later
-    toast.success("Advertisement deleted successfully!");
-  };
+  const handleDelete = async (id) => {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.delete(`/advertisements/${id}`);
+          Swal.fire("Deleted!", "Your Advertisements has been deleted.", "success");
+          queryClient.invalidateQueries(["myAdvertisements", user?.email]);
+        } catch (error) {
+          Swal.fire("Error!", "Failed to delete the Advertisements.", "error");
+          console.error(error);
+        }
+      }
+    };
 
   const filteredAds = advertisements.filter((ad) => {
     const matchesSearch =
@@ -114,7 +135,7 @@ const MyAdvertisements = () => {
                       <Edit className="w-4 h-4" />
                     </Link>
                     <button
-                      onClick={() => handleDelete(ad)}
+                      onClick={() => handleDelete(ad._id)}
                       className="bg-red-500 px-3 py-2 rounded text-white"
                     >
                       <Trash2 className="w-4 h-4" />
