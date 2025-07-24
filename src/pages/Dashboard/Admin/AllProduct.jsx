@@ -27,7 +27,6 @@ const AllProduct = () => {
   const {
     data: products = [],
     isLoading,
-    isError,
     refetch,
   } = useQuery({
     queryKey: ["products"],
@@ -36,6 +35,65 @@ const AllProduct = () => {
       return res.data;
     },
   });
+
+  const approveProduct = async (productId) => {
+    try {
+      const res = await axiosSecure.patch(`/products/status/${productId}`, {
+        status: "approved",
+      });
+      if (res.data.modifiedCount > 0) {
+        toast.success("Product approved ✅");
+        refetch();
+      }
+    } catch (error) {
+      toast.error("Failed to approve product");
+    }
+  };
+
+  const openRejectModal = (productId) => {
+    setRejectModal({ isOpen: true, productId });
+    setRejectionReason("");
+  };
+
+  const closeRejectModal = () => {
+    setRejectModal({ isOpen: false, productId: null });
+    setRejectionReason("");
+  };
+
+  const confirmReject = async () => {
+    if (!rejectionReason.trim()) {
+      toast.error("অস্বীকারের কারণ লিখুন!");
+      return;
+    }
+
+    try {
+      const res = await axiosSecure.patch(
+        `/products/reject/${rejectModal.productId}`,
+        {
+          status: "rejected",
+          feedback: rejectionReason,
+        }
+      );
+
+      if (res.data.modifiedCount > 0) {
+        toast.error("Product rejected ❌");
+        refetch();
+        closeRejectModal();
+      } else {
+        toast.error("Rejection failed");
+      }
+    } catch (error) {
+      toast.error("Server error");
+    }
+  };
+
+  const deleteProduct = (productId) => {
+    toast.success("Product deleted!");
+  };
+
+  const updateProduct = (productId) => {
+    toast.info("Update feature coming soon!");
+  };
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -68,37 +126,7 @@ const AllProduct = () => {
       ? products
       : products.filter((product) => product.status === filterStatus);
 
-  const approveProduct = (productId) => {
-    toast.success(`Product approved! ✅`);
-  };
-
-  const openRejectModal = (productId) => {
-    setRejectModal({ isOpen: true, productId });
-    setRejectionReason("");
-  };
-
-  const closeRejectModal = () => {
-    setRejectModal({ isOpen: false, productId: null });
-    setRejectionReason("");
-  };
-
-  const confirmReject = () => {
-    if (!rejectionReason.trim()) {
-      toast.error("অস্বীকারের কারণ লিখুন!");
-      return;
-    }
-
-    toast.error("Product rejected! ❌");
-    closeRejectModal();
-  };
-
-  const deleteProduct = (productId) => {
-    toast.success("Product deleted!");
-  };
-
-  const updateProduct = (productId) => {
-    toast.info("Update feature coming soon!");
-  };
+  if (isLoading) return <p className="text-center p-8">Loading products...</p>;
 
   return (
     <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden p-6">
@@ -262,9 +290,9 @@ const AllProduct = () => {
                             {getStatusText(product.status)}
                           </span>
                           {product.status === "rejected" &&
-                            product.rejectionReason && (
+                            product.rejectionFeedback && (
                               <div className="text-xs text-error opacity-70">
-                                {product.rejectionReason}
+                                কারণ: {product.rejectionFeedback}
                               </div>
                             )}
                         </div>
@@ -356,8 +384,7 @@ const AllProduct = () => {
                 onClick={confirmReject}
                 disabled={!rejectionReason.trim()}
               >
-                <X size={16} />
-                প্রত্যাখ্যান করুন
+                <X size={16} /> প্রত্যাখ্যান করুন
               </button>
               <button className="btn" onClick={closeRejectModal}>
                 বাতিল
