@@ -9,9 +9,15 @@ import {
   X,
   Camera,
   AlertCircle,
+  Percent,
+  Store,
+  DollarSign,
+  Flame,
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { imageUpload } from "../../../api/utils";
 
 const AddAdvertisement = () => {
   const [previewImage, setPreviewImage] = useState(null);
@@ -31,13 +37,17 @@ const AddAdvertisement = () => {
     },
   });
 
-  const handleImageUpload = (file) => {
+  const handleImageUpload = async (file) => {
     if (file && file.type.startsWith("image/")) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setPreviewImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
+      try {
+        toast.info("Uploading image...");
+        const url = await imageUpload(file);
+        setPreviewImage(url);
+        toast.success("Image uploaded successfully!");
+      } catch (error) {
+        console.error("Image upload failed:", error);
+        toast.error("Failed to upload image. Try again.");
+      }
     } else {
       toast.error("Please upload a valid image file");
     }
@@ -63,26 +73,35 @@ const AddAdvertisement = () => {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
 
-
-    console.log("Advertisement Data:", {
+    const adsData = {
       ...data,
       bannerImage: previewImage,
       createdAt: new Date().toISOString(),
-    });
+    };
+    console.log("Advertisement data:", adsData);
 
-    toast.success("Advertisement created successfully!", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
-
-    // Reset form
-    reset();
-    setPreviewImage(null);
-    setIsSubmitting(false);
+    try {
+      const advertisementsData = await axios.post(
+        `${import.meta.env.VITE_API_URL}/add-advertisements`,
+        adsData
+      );
+      toast.success("Advertisement created successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      console.log(advertisementsData);
+      // Reset form
+      reset();
+      setPreviewImage(null);
+      setIsSubmitting(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to add product");
+    }
   };
 
   const removeImage = () => {
@@ -133,6 +152,76 @@ const AddAdvertisement = () => {
                 </p>
               )}
             </div>
+
+            {/*  */}
+
+            {/* Shop Name Field */}
+            <div>
+              <label className="flex items-center gap-2 text-white font-semibold mb-3">
+                <Store className="w-5 h-5 text-cyan-400" />
+                Shop Name
+              </label>
+              <input
+                {...register("shopName")}
+                className="w-full px-4 py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300"
+                placeholder="Enter your shop name"
+              />
+            </div>
+
+            {/* Row for Discount and Original Price */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Discount Field */}
+              <div>
+                <label className="flex items-center gap-2 text-white font-semibold mb-3">
+                  <Percent className="w-5 h-5 text-orange-400" />
+                  Discount
+                </label>
+                <input
+                  {...register("discount")}
+                  className="w-full px-4 py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-300"
+                  placeholder="e.g., 15% OFF"
+                />
+              </div>
+
+              {/* Original Price Field */}
+              <div>
+                <label className="flex items-center gap-2 text-white font-semibold mb-3">
+                  <DollarSign className="w-5 h-5 text-yellow-400" />
+                  Original Price (৳)
+                </label>
+                <input
+                  type="number"
+                  {...register("originalPrice", {
+                    valueAsNumber: true,
+                    min: 0,
+                  })}
+                  className="w-full px-4 py-4 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-300"
+                  placeholder="Enter original price"
+                />
+              </div>
+            </div>
+
+            {/* Hot Deal Toggle */}
+            <div>
+              <label className="flex items-center gap-2 text-white font-semibold mb-3">
+                <Flame className="w-5 h-5 text-red-400" />
+                Hot Deal
+              </label>
+              <div className="bg-white/20 border border-white/30 rounded-xl p-4">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    {...register("isHot")}
+                    className="w-5 h-5 rounded border-2 border-white/30 bg-white/20 text-red-500 focus:ring-2 focus:ring-red-400"
+                  />
+                  <span className="text-white">
+                    Mark this as a hot deal (will be highlighted)
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/*  */}
 
             {/* Description Field */}
             <div>

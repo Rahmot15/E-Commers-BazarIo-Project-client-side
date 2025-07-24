@@ -123,7 +123,7 @@ const AddProduct = () => {
         pricePerUnit: parseFloat(formData.pricePerUnit),
         historicalPrices: historicalPrices.map((item) => ({
           ...item,
-          price: parseFloat(item.price), // 👈 also convert historical price
+          price: parseFloat(item.price),
         })),
         image: uploadedImageUrl,
       };

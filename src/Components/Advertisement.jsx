@@ -29,7 +29,7 @@ const advertisements = [
   },
   {
     id: 2,
-    title: "মাছে মেগা অফার!",
+    title: "Mega offer on fish!",
     productName: "Fresh Fish",
     vendorName: "Karim Fish Corner",
     shopName: "Karim's Fish Market",
