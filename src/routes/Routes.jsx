@@ -21,6 +21,8 @@ import Dashboard from "../pages/Dashboard/Common/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
 import Profile from "../pages/Dashboard/Common/Profile";
+import SellerRoute from "./SellerRoute";
+import AdminRoute from "./AdninRoute";
 
 export const router = createBrowserRouter([
   {
@@ -108,7 +110,9 @@ export const router = createBrowserRouter([
         path: "add-product",
         element: (
           <PrivateRoute>
-            <AddProduct />
+            <SellerRoute>
+              <AddProduct />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -116,7 +120,9 @@ export const router = createBrowserRouter([
         path: "my-products",
         element: (
           <PrivateRoute>
-            <MyProducts />
+            <SellerRoute>
+              <MyProducts />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -124,8 +130,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/updateProduct/:id",
         element: (
           <PrivateRoute>
-            {" "}
-            <UpdateProduct />{" "}
+            <SellerRoute>
+              <UpdateProduct />
+            </SellerRoute>
           </PrivateRoute>
         ),
         loader: ({ params }) =>
@@ -135,7 +142,9 @@ export const router = createBrowserRouter([
         path: "add-ad",
         element: (
           <PrivateRoute>
-            <AddAdvertisement />
+            <SellerRoute>
+              <AddAdvertisement />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -143,7 +152,9 @@ export const router = createBrowserRouter([
         path: "my-ads",
         element: (
           <PrivateRoute>
-            <MyAdvertisements />
+            <SellerRoute>
+              <MyAdvertisements />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -153,8 +164,9 @@ export const router = createBrowserRouter([
         path: "all-users",
         element: (
           <PrivateRoute>
-            {" "}
-            <AllUsers />
+            <AdminRoute>
+              <AllUsers />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -162,7 +174,9 @@ export const router = createBrowserRouter([
         path: "all-products",
         element: (
           <PrivateRoute>
-            <AllProduct />
+            <AdminRoute>
+              <AllProduct />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -170,7 +184,9 @@ export const router = createBrowserRouter([
         path: "all-ads",
         element: (
           <PrivateRoute>
-            <AllAds />
+            <AdminRoute>
+              <AllAds />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -178,7 +194,9 @@ export const router = createBrowserRouter([
         path: "all-orders",
         element: (
           <PrivateRoute>
-            <AllOrders />
+            <AdminRoute>
+              <AllOrders />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
