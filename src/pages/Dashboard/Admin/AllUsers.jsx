@@ -1,116 +1,83 @@
-import React, { useState } from 'react';
-import { Users, Edit3, Check, X } from 'lucide-react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { Users, Edit3, Check, X } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 
 const AllUsers = () => {
-  // Static user data
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: 'রহিম উদ্দিন',
-      email: 'rahim@example.com',
-      role: 'user'
-    },
-    {
-      id: 2,
-      name: 'ফাতিমা খাতুন',
-      email: 'fatima@example.com',
-      role: 'vendor'
-    },
-    {
-      id: 3,
-      name: 'করিম আহমেদ',
-      email: 'karim@example.com',
-      role: 'admin'
-    },
-    {
-      id: 4,
-      name: 'সালমা বেগম',
-      email: 'salma@example.com',
-      role: 'user'
-    },
-    {
-      id: 5,
-      name: 'নাসির হোসেন',
-      email: 'nasir@example.com',
-      role: 'vendor'
-    },
-    {
-      id: 6,
-      name: 'রুমানা আক্তার',
-      email: 'rumana@example.com',
-      role: 'user'
-    },
-    {
-      id: 7,
-      name: 'তানভীর রহমান',
-      email: 'tanvir@example.com',
-      role: 'admin'
-    },
-    {
-      id: 8,
-      name: 'শাহিনা পারভীন',
-      email: 'shahina@example.com',
-      role: 'user'
-    }
-  ]);
-
   const [editingUser, setEditingUser] = useState(null);
-  const [newRole, setNewRole] = useState('');
+  const [newRole, setNewRole] = useState("");
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+
+  const { data: users = [], isLoading } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const { data } = await axiosSecure("/all-users");
+      return data;
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async ({ email, role }) => {
+      const { data } = await axiosSecure.patch(`/user/role/update/${email}`, {
+        role,
+      });
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("User role updated successfully! 🎉");
+      setEditingUser(null);
+      setNewRole("");
+      queryClient.invalidateQueries(["users"]);
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("Failed to update user role.");
+    },
+  });
+
+  if (isLoading) return <LoadingSpinner />;
 
   const roles = [
-    { value: 'user', label: 'User', badge: 'badge-primary' },
-    { value: 'vendor', label: 'Vendor', badge: 'badge-secondary' },
-    { value: 'admin', label: 'Admin', badge: 'badge-accent' }
+    { value: "customer", label: "customer", badge: "badge-primary" },
+    { value: "seller", label: "seller", badge: "badge-secondary" },
+    { value: "admin", label: "Admin", badge: "badge-accent" },
   ];
 
   const getRoleBadgeClass = (role) => {
     switch (role) {
-      case 'admin':
-        return 'badge badge-accent';
-      case 'vendor':
-        return 'badge badge-secondary';
-      case 'user':
-        return 'badge badge-primary';
+      case "admin":
+        return "badge badge-accent";
+      case "seller":
+        return "badge badge-secondary";
+      case "customer":
+        return "badge badge-primary";
       default:
-        return 'badge badge-neutral';
+        return "badge badge-neutral";
     }
   };
 
   const startEdit = (user) => {
-    setEditingUser(user.id);
+    setEditingUser(user._id);
     setNewRole(user.role);
   };
 
   const cancelEdit = () => {
     setEditingUser(null);
-    setNewRole('');
+    setNewRole("");
   };
 
-  const saveRoleChange = (userId) => {
-    setUsers(prevUsers =>
-      prevUsers.map(user =>
-        user.id === userId ? { ...user, role: newRole } : user
-      )
-    );
 
-    const user = users.find(u => u.id === userId);
-    toast.success(`${user.name} এর Role সফলভাবে ${newRole} এ পরিবর্তন হয়েছে! 🎉`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
 
-    setEditingUser(null);
-    setNewRole('');
+  const saveRoleChange = (userEmail) => {
+    mutation.mutate({ email: userEmail, role: newRole });
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden py-6">
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden py-6 px-2">
       <div className="container mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -119,28 +86,32 @@ const AllUsers = () => {
               <Users size={24} />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-base-content">All Users</h1>
-              <p className="text-base-content/70">List of all users and role management</p>
+              <h1 className="text-3xl font-bold text-base-content">
+                All Users
+              </h1>
+              <p className="text-base-content/70">
+                List of all users and role management
+              </p>
             </div>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="stat bg-base-100 rounded-lg shadow">
               <div className="stat-title">Total Users</div>
               <div className="stat-value text-primary">{users.length}</div>
             </div>
             <div className="stat bg-base-100 rounded-lg shadow">
-              <div className="stat-title">Admins</div>
-              <div className="stat-value text-accent">{users.filter(u => u.role === 'admin').length}</div>
-            </div>
-            <div className="stat bg-base-100 rounded-lg shadow">
               <div className="stat-title">Vendors</div>
-              <div className="stat-value text-secondary">{users.filter(u => u.role === 'vendor').length}</div>
+              <div className="stat-value text-secondary">
+                {users.filter((u) => u.role === "seller").length}
+              </div>
             </div>
             <div className="stat bg-base-100 rounded-lg shadow">
-              <div className="stat-title">Regular Users</div>
-              <div className="stat-value text-primary">{users.filter(u => u.role === 'user').length}</div>
+              <div className="stat-title">Customer</div>
+              <div className="stat-value text-primary">
+                {users.filter((u) => u.role === "customer").length}
+              </div>
             </div>
           </div>
         </div>
@@ -161,13 +132,13 @@ const AllUsers = () => {
                 </thead>
                 <tbody>
                   {users.map((user, index) => (
-                    <tr key={user.id} className="hover">
+                    <tr key={user._id} className="hover">
                       <td className="font-medium">{index + 1}</td>
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="avatar placeholder">
                             <div className="bg-neutral text-neutral-content rounded-full w-10">
-                              <span className="text-sm">{user.name.charAt(0)}</span>
+                              <img src={user.image} alt={user.name.charAt(0)} />
                             </div>
                           </div>
                           <span className="font-medium">{user.name}</span>
@@ -175,13 +146,13 @@ const AllUsers = () => {
                       </td>
                       <td className="text-base-content/70">{user.email}</td>
                       <td>
-                        {editingUser === user.id ? (
+                        {editingUser === user._id ? (
                           <select
                             className="select select-bordered select-sm w-full max-w-xs"
                             value={newRole}
                             onChange={(e) => setNewRole(e.target.value)}
                           >
-                            {roles.map(role => (
+                            {roles.map((role) => (
                               <option key={role.value} value={role.value}>
                                 {role.label}
                               </option>
@@ -189,18 +160,23 @@ const AllUsers = () => {
                           </select>
                         ) : (
                           <span className={getRoleBadgeClass(user.role)}>
-                            {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                            {user.role.charAt(0).toUpperCase() +
+                              user.role.slice(1)}
                           </span>
                         )}
                       </td>
                       <td>
                         <div className="flex justify-center gap-2">
-                          {editingUser === user.id ? (
+                          {editingUser === user._id ? (
                             <>
                               <button
                                 className="btn btn-success btn-sm"
-                                onClick={() => saveRoleChange(user.id)}
-                                disabled={!newRole || newRole === user.role}
+                                onClick={() => saveRoleChange(user.email)}
+                                disabled={
+                                  !newRole ||
+                                  newRole === user.role ||
+                                  mutation.isLoading
+                                }
                               >
                                 <Check size={14} />
                               </button>
@@ -238,15 +214,21 @@ const AllUsers = () => {
             <div className="flex flex-wrap gap-4">
               <div className="flex items-center gap-2">
                 <span className="badge badge-primary">User</span>
-                <span className="text-sm text-base-content/70">Regular user with basic permissions</span>
+                <span className="text-sm text-base-content/70">
+                  Regular user with basic permissions
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="badge badge-secondary">Vendor</span>
-                <span className="text-sm text-base-content/70">Can sell products and manage inventory</span>
+                <span className="text-sm text-base-content/70">
+                  Can sell products and manage inventory
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="badge badge-accent">Admin</span>
-                <span className="text-sm text-base-content/70">Full system access and user management</span>
+                <span className="text-sm text-base-content/70">
+                  Full system access and user management
+                </span>
               </div>
             </div>
           </div>
