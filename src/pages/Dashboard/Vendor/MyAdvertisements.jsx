@@ -104,10 +104,10 @@ const MyAdvertisements = () => {
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
-            <option value="all">All</option>
-            <option value="approved">Approved</option>
-            <option value="pending">Pending</option>
-            <option value="rejected">Rejected</option>
+            <option className="text-gray-800" value="all">All</option>
+            <option className="text-gray-800" value="approved">Approved</option>
+            <option className="text-gray-800" value="pending">Pending</option>
+            <option className="text-gray-800" value="rejected">Rejected</option>
           </select>
         </div>
 

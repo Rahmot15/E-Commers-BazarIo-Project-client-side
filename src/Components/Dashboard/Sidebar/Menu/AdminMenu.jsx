@@ -10,10 +10,6 @@ import {
 const AdminMenu = ({ linkClass, onClose }) => {
   return (
     <>
-      <h2 className="text-gray-400 uppercase text-xs mt-6 mb-1">
-        🛠️ Admin Panel
-      </h2>
-
       {/* <NavLink to="/dashboard" end className={linkClass} onClick={onClose}>
         <FaHome /> Home
       </NavLink> */}

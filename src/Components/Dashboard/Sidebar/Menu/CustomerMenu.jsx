@@ -7,9 +7,6 @@ const CustomerMenu = ({ linkClass, onClose }) => {
       {/* <NavLink to="/dashboard" end className={linkClass} onClick={onClose}>
         <FaHome /> Home
       </NavLink> */}
-      <h2 className="text-gray-400 uppercase text-xs mt-4 mb-1">
-        👤 User Panel
-      </h2>
       <NavLink
         to="/dashboard/price-trend"
         className={linkClass}

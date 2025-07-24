@@ -7,17 +7,10 @@ import SellerMenu from "./Menu/SellerMenu";
 import AdminMenu from "./Menu/AdminMenu";
 import CustomerMenu from "./Menu/CustomerMenu";
 import useRole from "../../../hooks/useRole";
+import LoadingSpinner from "../../Shared/LoadingSpinner";
 
 const Sidebar = () => {
-
-
-  const [role, isRoleLoading] = useRole()
-  console.log(role, isRoleLoading);
-
-
-
   const [isOpen, setIsOpen] = useState(false);
-
   const closeSidebar = () => setIsOpen(false);
   const openSidebar = () => setIsOpen(true);
 
@@ -52,6 +45,8 @@ const Sidebar = () => {
 };
 
 const SidebarContent = ({ onClose }) => {
+  const [role, isRoleLoading] = useRole();
+  if (isRoleLoading) return <LoadingSpinner />;
   return (
     <>
       <div>
@@ -60,9 +55,15 @@ const SidebarContent = ({ onClose }) => {
         </div>
 
         <nav className="mt-4 flex flex-col gap-1 px-4">
-          <CustomerMenu linkClass={linkClass} onClose={onClose} />
-          <SellerMenu linkClass={linkClass} onClose={onClose} />
-          <AdminMenu linkClass={linkClass} onClose={onClose} />
+          {role === "customer" && (
+            <CustomerMenu linkClass={linkClass} onClose={onClose} />
+          )}
+          {role === "seller" && (
+            <SellerMenu linkClass={linkClass} onClose={onClose} />
+          )}
+          {role === "admin" && (
+            <AdminMenu linkClass={linkClass} onClose={onClose} />
+          )}
         </nav>
       </div>
 
