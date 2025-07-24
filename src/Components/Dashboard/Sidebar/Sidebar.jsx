@@ -6,8 +6,16 @@ import Logo from "../../Shared/Logo/Logo";
 import SellerMenu from "./Menu/SellerMenu";
 import AdminMenu from "./Menu/AdminMenu";
 import CustomerMenu from "./Menu/CustomerMenu";
+import useRole from "../../../hooks/useRole";
 
 const Sidebar = () => {
+
+
+  const [role, isRoleLoading] = useRole()
+  console.log(role, isRoleLoading);
+
+
+
   const [isOpen, setIsOpen] = useState(false);
 
   const closeSidebar = () => setIsOpen(false);

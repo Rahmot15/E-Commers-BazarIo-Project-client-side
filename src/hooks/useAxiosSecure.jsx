@@ -1,17 +1,23 @@
 import axios from "axios";
-import React from "react";
 import useAuth from "./useAuth";
-
-const instance = axios.create({
-  baseURL: "http://localhost:5000",
-});
 
 const useAxiosSecure = () => {
   const { user } = useAuth();
-  instance.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${user.accessToken}`;
-    return config;
+
+  const instance = axios.create({
+    baseURL: "http://localhost:5000",
   });
+
+  instance.interceptors.request.use(
+    (config) => {
+      const token = user?.accessToken || localStorage.getItem("access-token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
   return instance;
 };
 

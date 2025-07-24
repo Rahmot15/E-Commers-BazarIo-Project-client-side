@@ -22,8 +22,8 @@ const AddProduct = () => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
-    vendorEmail: user?.email,
-    vendorName: user?.displayName,
+    vendorEmail: user?.email || '',
+    vendorName: user?.displayName || '',
     marketName: "",
     date: new Date().toISOString().split("T")[0],
     marketDescription: "",
