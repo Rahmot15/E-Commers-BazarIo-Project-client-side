@@ -23,6 +23,7 @@ import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
 import Profile from "../pages/Dashboard/Common/Profile";
 import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdninRoute";
+import UpdateAdvertisements from "../pages/Dashboard/Vendor/UpdateAdvertisements";
 
 export const router = createBrowserRouter([
   {
@@ -137,6 +138,18 @@ export const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/products/${params.id}`),
+      },
+      {
+        path: "/dashboard/updateAdvertisements/:id",
+        element: (
+          <PrivateRoute>
+            {/* <SellerRoute> */}
+              <UpdateAdvertisements />
+            {/* </SellerRoute> */}
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/advertisements/${params.id}`),
       },
       {
         path: "add-ad",

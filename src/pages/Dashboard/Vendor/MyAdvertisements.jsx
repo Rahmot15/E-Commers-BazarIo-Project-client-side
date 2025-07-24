@@ -1,51 +1,26 @@
-// Full working version of MyAdvertisements with static edit form (no modal)
 import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Edit, Trash2, CheckCircle, Clock, XCircle } from "lucide-react";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router";
 
 const MyAdvertisements = () => {
-  const advertisements = [
-    {
-      id: 1,
-      title: "Summer Sale - Premium Headphones",
-      description:
-        "Get 30% off on all premium wireless headphones. Limited time offer with free shipping and extended warranty coverage.",
-      status: "approved",
-      bannerImage:
-        "https://via.placeholder.com/400x200/6366f1/ffffff?text=Headphones+Sale",
-      createdAt: "2024-07-15",
-      feedback: null,
+  const axiosSecure = useAxiosSecure();
+
+  const { data: advertisements = [], isLoading, isError } = useQuery({
+    queryKey: ["myAdvertisements"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/advertisements");
+      return res.data;
     },
-    {
-      id: 2,
-      title: "Smart Watch Launch Campaign",
-      description:
-        "Introducing our latest smartwatch with advanced health monitoring features and week-long battery life.",
-      status: "pending",
-      bannerImage:
-        "https://via.placeholder.com/400x200/8b5cf6/ffffff?text=Smart+Watch",
-      createdAt: "2024-07-12",
-      feedback: null,
-    },
-    {
-      id: 3,
-      title: "Organic Fashion Collection",
-      description:
-        "Sustainable and eco-friendly clothing made from 100% organic materials. Fashion that cares for the planet.",
-      status: "rejected",
-      bannerImage:
-        "https://via.placeholder.com/400x200/ef4444/ffffff?text=Organic+Fashion",
-      createdAt: "2024-07-10",
-      feedback:
-        "Banner image resolution is too low. Please upload a higher quality image (minimum 1200x600px).",
-    },
-  ];
+  });
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
 
   const handleDelete = () => {
-    //
+    // Implement delete logic later
     toast.success("Advertisement deleted successfully!");
   };
 
@@ -81,6 +56,9 @@ const MyAdvertisements = () => {
         return status;
     }
   };
+
+  if (isLoading) return <p className="text-center text-white">Loading...</p>;
+  if (isError) return <p className="text-center text-red-400">Failed to load advertisements</p>;
 
   return (
     <div className="">
@@ -123,7 +101,7 @@ const MyAdvertisements = () => {
             </thead>
             <tbody>
               {filteredAds.map((ad) => (
-                <tr key={ad.id} className="border-b border-white/10">
+                <tr key={ad._id} className="border-b border-white/10">
                   <td className="p-4 whitespace-pre-wrap">{ad.title}</td>
                   <td className="p-4 whitespace-pre-wrap">
                     {ad.description.slice(0, 50)}...
@@ -132,9 +110,9 @@ const MyAdvertisements = () => {
                     {renderStatusBadge(ad.status)}
                   </td>
                   <td className="p-4 flex justify-center gap-2">
-                    <button className="bg-blue-500 px-3 py-2 rounded text-white">
+                    <Link to={`/dashboard/updateAdvertisements/${ad._id}`} className="bg-blue-500 px-3 py-2 rounded text-white">
                       <Edit className="w-4 h-4" />
-                    </button>
+                    </Link>
                     <button
                       onClick={() => handleDelete(ad)}
                       className="bg-red-500 px-3 py-2 rounded text-white"
