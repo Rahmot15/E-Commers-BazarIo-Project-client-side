@@ -10,12 +10,17 @@ import {
   DollarSign,
   Filter,
 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import { Link } from "react-router";
+import Swal from "sweetalert2";
+import useAuth from "../../../hooks/useAuth";
 
 const AllProduct = () => {
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [filterStatus, setFilterStatus] = useState("all");
   const [rejectModal, setRejectModal] = useState({
@@ -24,9 +29,13 @@ const AllProduct = () => {
   });
   const [rejectionReason, setRejectionReason] = useState("");
 
+  const queryClient = useQueryClient();
+
   const {
     data: products = [],
     isLoading,
+    isError,
+    error,
     refetch,
   } = useQuery({
     queryKey: ["products"],
@@ -46,6 +55,7 @@ const AllProduct = () => {
         refetch();
       }
     } catch (error) {
+      console.log(error);
       toast.error("Failed to approve product");
     }
   };
@@ -83,16 +93,32 @@ const AllProduct = () => {
         toast.error("Rejection failed");
       }
     } catch (error) {
+      console.log(error);
       toast.error("Server error");
     }
   };
 
-  const deleteProduct = (productId) => {
-    toast.success("Product deleted!");
-  };
+  const deleteProduct = async (productId) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
 
-  const updateProduct = (productId) => {
-    toast.info("Update feature coming soon!");
+    if (result.isConfirmed) {
+      try {
+        await axiosSecure.delete(`/products/${productId}`);
+        Swal.fire("Deleted!", "Your product has been deleted.", "success");
+        queryClient.invalidateQueries(["my-products", user?.email]);
+      } catch (error) {
+        Swal.fire("Error!", "Failed to delete the product.", "error");
+        console.error(error);
+      }
+    }
   };
 
   const getStatusBadge = (status) => {
@@ -126,8 +152,17 @@ const AllProduct = () => {
       ? products
       : products.filter((product) => product.status === filterStatus);
 
-  if (isLoading) return <p className="text-center p-8">Loading products...</p>;
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
+  if (isError) {
+    return (
+      <div className="text-center text-red-500">
+        Error loading products: {error.message}
+      </div>
+    );
+  }
   return (
     <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden p-6">
       <div className="container mx-auto">
@@ -317,13 +352,13 @@ const AllProduct = () => {
                               </button>
                             </>
                           )}
-                          <button
+                          <Link
+                            to={`/dashboard/updateProduct/${product._id}`}
                             className="btn btn-info btn-xs"
-                            onClick={() => updateProduct(product._id)}
                             title="Update"
                           >
                             <Edit3 size={12} />
-                          </button>
+                          </Link>
                           <button
                             className="btn btn-error btn-xs"
                             onClick={() => deleteProduct(product._id)}
