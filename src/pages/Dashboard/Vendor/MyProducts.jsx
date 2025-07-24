@@ -33,29 +33,28 @@ const MyProducts = () => {
     enabled: !!user?.email,
   });
 
-
   const handleDelete = async (id) => {
-  const result = await Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, delete it!',
-  });
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
 
-  if (result.isConfirmed) {
-    try {
-      await axiosSecure.delete(`/products/${id}`);
-      Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
-      queryClient.invalidateQueries(["my-products", user?.email]);
-    } catch (error) {
-      Swal.fire('Error!', 'Failed to delete the product.', 'error');
-      console.error(error);
+    if (result.isConfirmed) {
+      try {
+        await axiosSecure.delete(`/products/${id}`);
+        Swal.fire("Deleted!", "Your product has been deleted.", "success");
+        queryClient.invalidateQueries(["my-products", user?.email]);
+      } catch (error) {
+        Swal.fire("Error!", "Failed to delete the product.", "error");
+        console.error(error);
+      }
     }
-  }
-};
+  };
 
   const getStatusIcon = (status) => {
     switch (status) {
@@ -86,7 +85,7 @@ const MyProducts = () => {
   };
 
   if (isLoading) {
-    return <LoadingSpinner/>
+    return <LoadingSpinner />;
   }
 
   if (isError) {
@@ -99,13 +98,11 @@ const MyProducts = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="">
+      <div>
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-white mb-2">My Products</h1>
-          <p className="text-purple-200">
-            List of products you have submitted
-          </p>
+          <p className="text-purple-200">List of products you have submitted</p>
         </div>
 
         {/* Products Table */}
@@ -125,6 +122,13 @@ const MyProducts = () => {
                 </tr>
               </thead>
               <tbody>
+                {products.length === 0 && (
+                  <tr>
+                    <td colSpan="6" className="text-center p-8 text-white">
+                      No products found for your account.
+                    </td>
+                  </tr>
+                )}
                 {products.map((product) => (
                   <tr
                     key={product._id}
@@ -139,7 +143,9 @@ const MyProducts = () => {
                     <td className="p-4 text-purple-200 hidden lg:block ">
                       {product.marketName}
                     </td>
-                    <td className="p-4 text-blue-200">{product.date}</td>
+                    <td className="p-4 text-blue-200">
+                      {new Date(product.date).toLocaleDateString("bn-BD")}
+                    </td>
                     <td className="p-4">
                       <div className="flex flex-col gap-2 w-28">
                         <span className={getStatusBadge(product.status)}>
@@ -147,33 +153,34 @@ const MyProducts = () => {
                           {product.status.charAt(0).toUpperCase() +
                             product.status.slice(1)}
                         </span>
-                        {product.feedback && (
-                          <div className="text-xs w-28 text-red-300 bg-red-500/20 p-2 rounded-lg border border-red-500/30">
-                            <AlertTriangle className="w-3 h-3 inline mr-1" />
-                            {product.feedback}
-                          </div>
-                        )}
+                        {/* rejectionFeedback property check */}
+                        {product.status === "rejected" &&
+                          product.rejectionFeedback && (
+                            <div className="text-xs w-28 text-red-300 bg-red-500/20 p-2 rounded-lg border border-red-500/30">
+                              <AlertTriangle className="w-3 h-3 inline mr-1" />
+                              {product.rejectionFeedback}
+                            </div>
+                          )}
                       </div>
                     </td>
                     <td className="p-4 text-center">
                       <div className="flex gap-2 justify-center">
-                        <Link to={`/dashboard/updateProduct/${product._id}`} className="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300">
+                        <Link
+                          to={`/dashboard/updateProduct/${product._id}`}
+                          className="btn btn-sm bg-blue-500 hover:bg-blue-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300"
+                        >
                           <Edit className="w-4 h-4" />
                         </Link>
-                        <button onClick={() => handleDelete(product._id)} className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300">
+                        <button
+                          onClick={() => handleDelete(product._id)}
+                          className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300"
+                        >
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </td>
                   </tr>
                 ))}
-                {products.length === 0 && (
-                  <tr>
-                    <td colSpan="6" className="text-center p-8 text-white">
-                      No products found for your account.
-                    </td>
-                  </tr>
-                )}
               </tbody>
             </table>
           </div>
