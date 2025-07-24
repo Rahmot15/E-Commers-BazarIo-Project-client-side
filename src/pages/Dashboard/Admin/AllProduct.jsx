@@ -5,97 +5,37 @@ import {
   X,
   Edit3,
   Trash2,
-  Eye,
   Calendar,
   Store,
   DollarSign,
   Filter,
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AllProduct = () => {
-  // Static product data
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "বাসমতি চাল",
-      vendorEmail: "rahim@vendor.com",
-      vendorName: "রহিম উদ্দিন",
-      marketName: "কারওয়ান বাজার",
-      price: 85,
-      date: "2024-12-15",
-      status: "pending",
-      image:
-        "https://images.unsplash.com/photo-1516684669134-de6f660c63b3?w=100",
-    },
-    {
-      id: 2,
-      name: "দেশি মুরগি",
-      vendorEmail: "fatima@vendor.com",
-      vendorName: "ফাতিমা খাতুন",
-      marketName: "নিউমার্কেট",
-      price: 320,
-      date: "2024-12-14",
-      status: "approved",
-      image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=100",
-    },
-    {
-      id: 3,
-      name: "টাটকা মাছ (রুই)",
-      vendorEmail: "karim@vendor.com",
-      vendorName: "করিম আহমেদ",
-      marketName: "মালিবাগ মার্কেট",
-      price: 450,
-      date: "2024-12-13",
-      status: "rejected",
-      rejectionReason: "Price unrealistic",
-      image: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=100",
-    },
-    {
-      id: 4,
-      name: "আলু (১ কেজি)",
-      vendorEmail: "salma@vendor.com",
-      vendorName: "সালমা বেগম",
-      marketName: "ধানমন্ডি বাজার",
-      price: 35,
-      date: "2024-12-12",
-      status: "pending",
-      image:
-        "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=100",
-    },
-    {
-      id: 5,
-      name: "পেঁয়াজ (১ কেজি)",
-      vendorEmail: "nasir@vendor.com",
-      vendorName: "নাসির হোসেন",
-      marketName: "গুলশান মার্কেট",
-      price: 45,
-      date: "2024-12-11",
-      status: "approved",
-      image:
-        "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=100",
-    },
-    {
-      id: 6,
-      name: "গরুর মাংস",
-      vendorEmail: "rumana@vendor.com",
-      vendorName: "রুমানা আক্তার",
-      marketName: "উত্তরা মার্কেট",
-      price: 650,
-      date: "2024-12-10",
-      status: "pending",
-      image:
-        "https://images.unsplash.com/photo-1588347818103-01c25eda6c5e?w=100",
-    },
-  ]);
-
+  const axiosSecure = useAxiosSecure();
   const [filterStatus, setFilterStatus] = useState("all");
   const [rejectModal, setRejectModal] = useState({
     isOpen: false,
     productId: null,
   });
   const [rejectionReason, setRejectionReason] = useState("");
+
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/products");
+      return res.data;
+    },
+  });
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -129,17 +69,7 @@ const AllProduct = () => {
       : products.filter((product) => product.status === filterStatus);
 
   const approveProduct = (productId) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === productId ? { ...product, status: "approved" } : product
-      )
-    );
-
-    const product = products.find((p) => p.id === productId);
-    toast.success(`"${product.name}" সফলভাবে অনুমোদিত হয়েছে! ✅`, {
-      position: "top-right",
-      autoClose: 3000,
-    });
+    toast.success(`Product approved! ✅`);
   };
 
   const openRejectModal = (productId) => {
@@ -154,55 +84,25 @@ const AllProduct = () => {
 
   const confirmReject = () => {
     if (!rejectionReason.trim()) {
-      toast.error("অস্বীকারের কারণ লিখুন!", {
-        position: "top-right",
-        autoClose: 2000,
-      });
+      toast.error("অস্বীকারের কারণ লিখুন!");
       return;
     }
 
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === rejectModal.productId
-          ? { ...product, status: "rejected", rejectionReason }
-          : product
-      )
-    );
-
-    const product = products.find((p) => p.id === rejectModal.productId);
-    toast.error(`"${product.name}" প্রত্যাখ্যান করা হয়েছে! ❌`, {
-      position: "top-right",
-      autoClose: 3000,
-    });
-
+    toast.error("Product rejected! ❌");
     closeRejectModal();
   };
 
   const deleteProduct = (productId) => {
-    const product = products.find((p) => p.id === productId);
-    if (window.confirm(`আপনি কি "${product.name}" মুছে ফেলতে চান?`)) {
-      setProducts((prevProducts) =>
-        prevProducts.filter((p) => p.id !== productId)
-      );
-      toast.success(`"${product.name}" সফলভাবে মুছে ফেলা হয়েছে! 🗑️`, {
-        position: "top-right",
-        autoClose: 3000,
-      });
-    }
+    toast.success("Product deleted!");
   };
 
   const updateProduct = (productId) => {
-    const product = products.find((p) => p.id === productId);
-    toast.info(`"${product.name}" আপডেট ফিচার শীঘ্রই আসছে! ✏️`, {
-      position: "top-right",
-      autoClose: 2000,
-    });
+    toast.info("Update feature coming soon!");
   };
 
   return (
     <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden p-6">
       <div className="container mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 bg-primary rounded-full text-primary-content">
@@ -218,7 +118,6 @@ const AllProduct = () => {
             </div>
           </div>
 
-          {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="stat bg-base-100 rounded-lg shadow">
               <div className="stat-title">Total Products</div>
@@ -244,7 +143,6 @@ const AllProduct = () => {
             </div>
           </div>
 
-          {/* Filter */}
           <div className="card bg-base-100 shadow mb-6">
             <div className="card-body py-4">
               <div className="flex items-center gap-4">
@@ -253,81 +151,69 @@ const AllProduct = () => {
                   <span className="font-medium">Filter by Status:</span>
                 </div>
                 <div className="flex gap-2">
-                  <button
-                    className={`btn btn-sm ${
-                      filterStatus === "all" ? "btn-primary" : "btn-outline"
-                    }`}
-                    onClick={() => setFilterStatus("all")}
-                  >
-                    All ({products.length})
-                  </button>
-                  <button
-                    className={`btn btn-sm ${
-                      filterStatus === "pending" ? "btn-warning" : "btn-outline"
-                    }`}
-                    onClick={() => setFilterStatus("pending")}
-                  >
-                    Pending (
-                    {products.filter((p) => p.status === "pending").length})
-                  </button>
-                  <button
-                    className={`btn btn-sm ${
-                      filterStatus === "approved"
-                        ? "btn-success"
-                        : "btn-outline"
-                    }`}
-                    onClick={() => setFilterStatus("approved")}
-                  >
-                    Approved (
-                    {products.filter((p) => p.status === "approved").length})
-                  </button>
-                  <button
-                    className={`btn btn-sm ${
-                      filterStatus === "rejected" ? "btn-error" : "btn-outline"
-                    }`}
-                    onClick={() => setFilterStatus("rejected")}
-                  >
-                    Rejected (
-                    {products.filter((p) => p.status === "rejected").length})
-                  </button>
+                  {["all", "pending", "approved", "rejected"].map((status) => (
+                    <button
+                      key={status}
+                      className={`btn btn-sm ${
+                        filterStatus === status
+                          ? status === "approved"
+                            ? "btn-success"
+                            : status === "rejected"
+                            ? "btn-error"
+                            : status === "pending"
+                            ? "btn-warning"
+                            : "btn-primary"
+                          : "btn-outline"
+                      }`}
+                      onClick={() => setFilterStatus(status)}
+                    >
+                      {status.charAt(0).toUpperCase() + status.slice(1)} (
+                      {
+                        products.filter((p) =>
+                          status === "all" ? true : p.status === status
+                        ).length
+                      }
+                      )
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Products Table */}
+        {/* Product Table */}
         <div className="card bg-base-100 rounded-2xl overflow-hidden shadow-xl">
           <div className="card-body p-0">
             <div className="overflow-x-auto">
               <table className="table table-zebra w-full">
                 <thead className="bg-base-200">
                   <tr>
-                    <th className="text-left">#</th>
-                    <th className="text-left">Product</th>
-                    <th className="text-left">Vendor</th>
-                    <th className="text-left">Market</th>
-                    <th className="text-left">Price</th>
-                    <th className="text-left">Date</th>
-                    <th className="text-left">Status</th>
+                    <th>#</th>
+                    <th>Product</th>
+                    <th>Vendor</th>
+                    <th>Market</th>
+                    <th>Price</th>
+                    <th>Date</th>
+                    <th>Status</th>
                     <th className="text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredProducts.map((product, index) => (
-                    <tr key={product.id} className="hover">
-                      <td className="font-medium">{index + 1}</td>
+                    <tr key={product._id} className="hover">
+                      <td>{index + 1}</td>
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="avatar">
                             <div className="w-12 h-12 rounded">
-                              <img src={product.image} alt={product.name} />
+                              <img src={product.image} alt={product.itemName} />
                             </div>
                           </div>
                           <div>
-                            <div className="font-bold">{product.name}</div>
+                            <div className="font-bold">{product.itemName}</div>
                             <div className="text-sm text-base-content/70">
-                              ID: #{product.id}
+                              ID: #{product._id}
                             </div>
                           </div>
                         </div>
@@ -354,7 +240,9 @@ const AllProduct = () => {
                             size={16}
                             className="text-base-content/50"
                           />
-                          <span className="font-bold">৳{product.price}</span>
+                          <span className="font-bold">
+                            ৳{product.pricePerUnit}
+                          </span>
                         </div>
                       </td>
                       <td>
@@ -387,14 +275,14 @@ const AllProduct = () => {
                             <>
                               <button
                                 className="btn btn-success btn-xs"
-                                onClick={() => approveProduct(product.id)}
+                                onClick={() => approveProduct(product._id)}
                                 title="Approve"
                               >
                                 <Check size={12} />
                               </button>
                               <button
                                 className="btn btn-error btn-xs"
-                                onClick={() => openRejectModal(product.id)}
+                                onClick={() => openRejectModal(product._id)}
                                 title="Reject"
                               >
                                 <X size={12} />
@@ -403,14 +291,14 @@ const AllProduct = () => {
                           )}
                           <button
                             className="btn btn-info btn-xs"
-                            onClick={() => updateProduct(product.id)}
+                            onClick={() => updateProduct(product._id)}
                             title="Update"
                           >
                             <Edit3 size={12} />
                           </button>
                           <button
                             className="btn btn-error btn-xs"
-                            onClick={() => deleteProduct(product.id)}
+                            onClick={() => deleteProduct(product._id)}
                             title="Delete"
                           >
                             <Trash2 size={12} />
@@ -453,7 +341,7 @@ const AllProduct = () => {
               </label>
               <textarea
                 className="textarea textarea-bordered w-full"
-                placeholder="যেমন: দাম অযৌক্তিক, বাজারের তথ্য ভুল, পণ্যের বিবরণ অস্পষ্ট ইত্যাদি..."
+                placeholder="যেমন: দাম অযৌক্তিক, বাজারের তথ্য ভুল ইত্যাদি..."
                 rows={3}
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
@@ -479,19 +367,7 @@ const AllProduct = () => {
         </div>
       )}
 
-      {/* Toast Container */}
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+      <ToastContainer />
     </div>
   );
 };

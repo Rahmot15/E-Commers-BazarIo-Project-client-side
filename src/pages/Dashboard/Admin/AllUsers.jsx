@@ -70,8 +70,6 @@ const AllUsers = () => {
     setNewRole("");
   };
 
-
-
   const saveRoleChange = (userEmail) => {
     mutation.mutate({ email: userEmail, role: newRole });
   };
@@ -246,7 +244,6 @@ const AllUsers = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
       />
     </div>
   );

@@ -193,8 +193,8 @@ const UpdateProduct = () => {
                   className="select select-bordered w-full bg-white/10 border-white/20 text-white"
                 >
                   <option className="text-gray-800" value="pending">Pending</option>
-                  <option className="text-gray-800" value="active">Active</option>
-                  <option className="text-gray-800" value="inactive">Inactive</option>
+                  <option disabled className="text-gray-800" value="active">Active</option>
+                  <option disabled className="text-gray-800" value="inactive">Inactive</option>
                 </select>
               </div>
             </div>

@@ -110,9 +110,9 @@ export const router = createBrowserRouter([
         path: "add-product",
         element: (
           <PrivateRoute>
-            <SellerRoute>
+            {/* <SellerRoute> */}
               <AddProduct />
-            </SellerRoute>
+            {/* </SellerRoute> */}
           </PrivateRoute>
         ),
       },
@@ -120,9 +120,9 @@ export const router = createBrowserRouter([
         path: "my-products",
         element: (
           <PrivateRoute>
-            <SellerRoute>
+            {/* <SellerRoute> */}
               <MyProducts />
-            </SellerRoute>
+            {/* </SellerRoute> */}
           </PrivateRoute>
         ),
       },
@@ -130,9 +130,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/updateProduct/:id",
         element: (
           <PrivateRoute>
-            <SellerRoute>
+            {/* <SellerRoute> */}
               <UpdateProduct />
-            </SellerRoute>
+            {/* </SellerRoute> */}
           </PrivateRoute>
         ),
         loader: ({ params }) =>
@@ -142,9 +142,9 @@ export const router = createBrowserRouter([
         path: "add-ad",
         element: (
           <PrivateRoute>
-            <SellerRoute>
+            {/* <SellerRoute> */}
               <AddAdvertisement />
-            </SellerRoute>
+            {/* </SellerRoute> */}
           </PrivateRoute>
         ),
       },
@@ -152,9 +152,9 @@ export const router = createBrowserRouter([
         path: "my-ads",
         element: (
           <PrivateRoute>
-            <SellerRoute>
+            {/* <SellerRoute> */}
               <MyAdvertisements />
-            </SellerRoute>
+            {/* </SellerRoute> */}
           </PrivateRoute>
         ),
       },
@@ -164,9 +164,9 @@ export const router = createBrowserRouter([
         path: "all-users",
         element: (
           <PrivateRoute>
-            <AdminRoute>
+            {/* <AdminRoute> */}
               <AllUsers />
-            </AdminRoute>
+            {/* </AdminRoute> */}
           </PrivateRoute>
         ),
       },
@@ -174,9 +174,9 @@ export const router = createBrowserRouter([
         path: "all-products",
         element: (
           <PrivateRoute>
-            <AdminRoute>
+            {/* <AdminRoute> */}
               <AllProduct />
-            </AdminRoute>
+            {/* </AdminRoute> */}
           </PrivateRoute>
         ),
       },
@@ -184,9 +184,9 @@ export const router = createBrowserRouter([
         path: "all-ads",
         element: (
           <PrivateRoute>
-            <AdminRoute>
+            {/* <AdminRoute> */}
               <AllAds />
-            </AdminRoute>
+            {/* </AdminRoute> */}
           </PrivateRoute>
         ),
       },
@@ -194,9 +194,9 @@ export const router = createBrowserRouter([
         path: "all-orders",
         element: (
           <PrivateRoute>
-            <AdminRoute>
+            {/* <AdminRoute> */}
               <AllOrders />
-            </AdminRoute>
+            {/* </AdminRoute> */}
           </PrivateRoute>
         ),
       },
