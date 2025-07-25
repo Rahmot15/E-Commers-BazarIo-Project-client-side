@@ -136,9 +136,9 @@ const Container = () => {
 
         {/* Optional: Load More */}
         <div className="text-center mt-12">
-          <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-8 rounded-lg transition-colors duration-200">
+          <Link to={'allProducts'} className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-8 rounded-lg transition-colors duration-200">
             Load More Markets
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import banner from "../assets/banner.jpg";
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const Banner = () => {
   return (
@@ -21,9 +22,12 @@ const Banner = () => {
           harvested with love from the family farm.
         </p>
 
-        <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium py-2 px-5 rounded-full shadow-md transition">
+        <Link
+          to={"allProducts"}
+          className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-medium py-2 px-5 rounded-full shadow-md transition"
+        >
           Shop Now
-        </button>
+        </Link>
       </motion.div>
 
       {/* Background Image Decoration */}

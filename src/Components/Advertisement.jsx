@@ -5,127 +5,24 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { Calendar, Store, Tag, ExternalLink, Heart, Eye } from "lucide-react";
-
-const advertisements = [
-  {
-    id: 1,
-    title: "শাকসবজিতে আজ ১০% ছাড়!",
-    productName: "Fresh Vegetables",
-    vendorName: "Rahman's Fresh Market",
-    shopName: "Rahman Vegetables Store",
-    discount: "10% OFF",
-    validDate: "2025-01-20",
-    duration: "3 days left",
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=500&fit=crop",
-    description: "সকল তাজা শাকসবজিতে বিশেষ ছাড়! আজই অর্ডার করুন।",
-    category: "Vegetables",
-    originalPrice: 100,
-    discountedPrice: 90,
-    views: 245,
-    likes: 18,
-    isHot: true,
-  },
-  {
-    id: 2,
-    title: "Mega offer on fish!",
-    productName: "Fresh Fish",
-    vendorName: "Karim Fish Corner",
-    shopName: "Karim's Fish Market",
-    discount: "15% OFF",
-    validDate: "2025-01-25",
-    duration: "8 days left",
-    image:
-      "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?w=800&h=500&fit=crop",
-    description: "সব ধরনের তাজা মাছে ১৫% ছাড়! সীমিত সময়ের জন্য।",
-    category: "Fish",
-    originalPrice: 200,
-    discountedPrice: 170,
-    views: 189,
-    likes: 25,
-    isHot: false,
-  },
-  {
-    id: 3,
-    title: "চালে বিশেষ ছাড়!",
-    productName: "Premium Rice",
-    vendorName: "Hasan Rice Mill",
-    shopName: "Hasan's Rice Store",
-    discount: "8% OFF",
-    validDate: "2025-01-22",
-    duration: "5 days left",
-    image:
-      "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?w=800&h=500&fit=crop",
-    description:
-      "প্রিমিয়াম মানের চালে আকর্ষণীয় ছাড়! বাল্ক অর্ডারে অতিরিক্ত ছাড়।",
-    category: "Rice",
-    originalPrice: 55,
-    discountedPrice: 51,
-    views: 156,
-    likes: 12,
-    isHot: true,
-  },
-  {
-    id: 4,
-    title: "ফলের উৎসব!",
-    productName: "Seasonal Fruits",
-    vendorName: "Ali Fruit Center",
-    shopName: "Ali's Fruit Paradise",
-    discount: "12% OFF",
-    validDate: "2025-01-30",
-    duration: "13 days left",
-    image:
-      "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=800&h=500&fit=crop",
-    description: "সব ধরনের মৌসুমী ফলে বিশেষ ছাড়! তাজা ও মিষ্টি।",
-    category: "Fruits",
-    originalPrice: 120,
-    discountedPrice: 106,
-    views: 278,
-    likes: 32,
-    isHot: false,
-  },
-  {
-    id: 5,
-    title: "মাংসে সুপার অফার!",
-    productName: "Fresh Meat",
-    vendorName: "Sumon Meat Shop",
-    shopName: "Sumon's Meat Corner",
-    discount: "20% OFF",
-    validDate: "2025-01-18",
-    duration: "1 day left",
-    image:
-      "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=800&h=500&fit=crop",
-    description: "গরু ও খাসির মাংসে বিশাল ছাড়! শেষ দিন আজ।",
-    category: "Meat",
-    originalPrice: 550,
-    discountedPrice: 440,
-    views: 432,
-    likes: 45,
-    isHot: true,
-  },
-  {
-    id: 6,
-    title: "দুধ ও ডিমে অফার!",
-    productName: "Dairy Products",
-    vendorName: "Fresh Dairy Farm",
-    shopName: "Farm Fresh Dairy",
-    discount: "7% OFF",
-    validDate: "2025-01-24",
-    duration: "7 days left",
-    image:
-      "https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=800&h=500&fit=crop",
-    description: "তাজা দুধ ও ডিমে বিশেষ ছাড়! প্রতিদিন তাজা সরবরাহ।",
-    category: "Dairy",
-    originalPrice: 80,
-    discountedPrice: 74,
-    views: 198,
-    likes: 22,
-    isHot: false,
-  },
-];
+import { Calendar, Store, Tag, ExternalLink } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import LoadingSpinner from "./Shared/LoadingSpinner";
 
 const Advertisement = () => {
+  const axiosSecure = useAxiosSecure();
+
+  const { data: ads = [], isLoading } = useQuery({
+    queryKey: ["advertisements"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/advertisements");
+      return res.data;
+    },
+  });
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
       <div className="text-center mb-12">
@@ -146,11 +43,11 @@ const Advertisement = () => {
         autoplay={{ delay: 4000 }}
         className="rounded-2xl overflow-hidden shadow-2xl"
       >
-        {advertisements.map((ad) => (
-          <SwiperSlide key={ad.id}>
-            <div className="relative w-full  ">
+        {ads.map((ad) => (
+          <SwiperSlide key={ad._id}>
+            <div className="relative w-full">
               <img
-                src={ad.image}
+                src={ad.bannerImage}
                 alt={ad.title}
                 className="absolute inset-0 w-full h-full object-cover"
               />
@@ -172,35 +69,36 @@ const Advertisement = () => {
                   <p className="text-gray-200 text-lg mb-6 leading-relaxed">
                     {ad.description}
                   </p>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="text-white">
-                      <span className="text-2xl font-bold text-green-400">
-                        ৳{ad.discountedPrice}
-                      </span>
-                      <span className="text-lg text-gray-400 line-through ml-2">
-                        ৳{ad.originalPrice}
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-300">per kg</div>
-                  </div>
+                  {(() => {
+                    const discountMatch = ad.discount?.match(/(\d+)%/);
+                    const discountPercent = discountMatch
+                      ? parseFloat(discountMatch[1])
+                      : 0;
+                    const discountedPrice =
+                      ad.originalPrice -
+                      (ad.originalPrice * discountPercent) / 100;
+
+                    return (
+                      <div className="flex items-center gap-4 mb-6 text-white text-2xl font-bold">
+                        <span className="text-green-400">
+                          ৳{discountedPrice.toFixed(2)}
+                        </span>
+                        <span className="text-gray-400 line-through text-xl">
+                          ৳{ad.originalPrice}
+                        </span>
+                      </div>
+                    );
+                  })()}
                   <div className="flex items-center gap-4 mb-6">
                     <div className="flex items-center gap-2 text-gray-300">
                       <Store size={18} />
-                      <span>{ad.vendorName}</span>
+                      <span>{ad.shopName}</span>
                     </div>
                     <div className="flex items-center gap-2 text-gray-300">
                       <Calendar size={18} />
-                      <span>{ad.duration}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-6 mb-6">
-                    <div className="flex items-center gap-2 text-gray-300">
-                      <Eye size={16} />
-                      <span>{ad.views} views</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-300">
-                      <Heart size={16} />
-                      <span>{ad.likes} likes</span>
+                      <span>
+                        {new Date(ad.createdAt).toLocaleDateString("en-GB")}
+                      </span>
                     </div>
                   </div>
                   <div className="flex gap-4">
