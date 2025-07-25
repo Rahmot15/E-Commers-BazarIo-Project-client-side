@@ -14,15 +14,17 @@ import {
   DollarSign,
   Flame,
 } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { imageUpload } from "../../../api/utils";
+import { useNavigate } from "react-router";
 
 const AddAdvertisement = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate()
 
   const {
     register,
@@ -98,6 +100,7 @@ const AddAdvertisement = () => {
       reset();
       setPreviewImage(null);
       setIsSubmitting(false);
+      navigate('/dashboard/my-ads')
     } catch (err) {
       console.error(err);
       toast.error("Failed to add product");
@@ -152,8 +155,6 @@ const AddAdvertisement = () => {
                 </p>
               )}
             </div>
-
-            {/*  */}
 
             {/* Shop Name Field */}
             <div>
@@ -221,7 +222,6 @@ const AddAdvertisement = () => {
               </div>
             </div>
 
-            {/*  */}
 
             {/* Description Field */}
             <div>
@@ -385,6 +385,7 @@ const AddAdvertisement = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
