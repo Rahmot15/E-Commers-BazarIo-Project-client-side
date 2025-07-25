@@ -16,9 +16,11 @@ import axios from "axios";
 import { imageUpload } from "../../../api/utils";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router";
 
 const AddProduct = () => {
   const { user } = useAuth();
+  const navigate = useNavigate()
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
@@ -148,6 +150,7 @@ const AddProduct = () => {
         setHistoricalPrices([{ price: "", date: "" }]);
         setUploadedImageUrl(null);
         setErrors({});
+        navigate('/dashboard/my-products')
       } catch (err) {
         console.error(err);
         toast.error("Failed to add product");
