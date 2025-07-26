@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Star,
   Heart,
@@ -102,14 +102,64 @@ const ProductDetails = () => {
     submitReview(newReview);
   };
 
-  const isDisabled = user?.role === "admin" || user?.role === "vendor";
+  const isDisabled = user?.role === "admin" || user?.role === "seller";
+
+  const { mutate: addToWatchlist } = useMutation({
+    mutationFn: async (watchlistData) => {
+      const res = await axiosSecure.post("/watchlist", watchlistData);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("Added to watchlist!");
+      setIsInWatchlist(true);
+    },
+    onError: () => {
+      toast.error("Failed to add to watchlist");
+    },
+  });
 
   const handleAddToWatchlist = () => {
-    toast.success(
-      isInWatchlist ? "Removed from watchlist" : "Added to watchlist"
-    );
-    setIsInWatchlist(!isInWatchlist);
+    if (!user) {
+      toast.error("You must be logged in to use the watchlist");
+      return;
+    }
+
+    if (isInWatchlist) {
+      toast.info("Already in watchlist");
+      return;
+    }
+
+    const watchlistItem = {
+      userEmail: user.email,
+      productName: products.itemName,
+      marketName: products.marketName,
+      productId: products._id,
+      addedAt: new Date().toISOString(),
+    };
+
+    addToWatchlist(watchlistItem);
   };
+
+  useEffect(() => {
+    if (!user || !products) return;
+
+    const checkWatchlist = async () => {
+      try {
+        const res = await axiosSecure.get(`/watchlist?email=${user.email}`);
+        console.log("Watchlist fetched:", res.data); // 🐞 Debug
+
+        const alreadyAdded = res.data.some(
+          (item) => item.productId === products._id
+        );
+
+        setIsInWatchlist(alreadyAdded);
+      } catch (error) {
+        console.error("Failed to check watchlist", error);
+      }
+    };
+
+    checkWatchlist();
+  }, [user, products, axiosSecure]);
 
   return (
     <GradientAll>
@@ -150,15 +200,14 @@ const ProductDetails = () => {
               <div className="flex gap-4">
                 <button
                   onClick={handleAddToWatchlist}
-                  disabled={isDisabled}
-                  className={`btn btn-outline border-white text-white hover:bg-white hover:text-gray-800 ${
-                    isDisabled ? "opacity-50 cursor-not-allowed" : ""
+                  disabled={isInWatchlist}
+                  className={`p-2 rounded-full transition-colors ${
+                    isInWatchlist
+                      ? "bg-red-500 text-white"
+                      : "bg-gray-200 text-gray-600"
                   }`}
                 >
-                  <Heart
-                    className={`w-5 h-5 ${isInWatchlist ? "fill-current" : ""}`}
-                  />
-                  {isInWatchlist ? "Remove from Watchlist" : "Add to Watchlist"}
+                  <Heart />
                 </button>
 
                 <button

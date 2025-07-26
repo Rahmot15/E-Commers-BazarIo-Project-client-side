@@ -24,6 +24,7 @@ import Profile from "../pages/Dashboard/Common/Profile";
 import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdninRoute";
 import UpdateAdvertisements from "../pages/Dashboard/Vendor/UpdateAdvertisements";
+import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,7 @@ export const router = createBrowserRouter([
         path: "/allProducts",
         Component: AllProducts,
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/products`),
+        hydrateFallbackElement: <LoadingSpinner/>
       },
       {
         path: "/productDetails/:id",
@@ -112,7 +114,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <SellerRoute> */}
-              <AddProduct />
+            <AddProduct />
             {/* </SellerRoute> */}
           </PrivateRoute>
         ),
@@ -122,7 +124,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <SellerRoute> */}
-              <MyProducts />
+            <MyProducts />
             {/* </SellerRoute> */}
           </PrivateRoute>
         ),
@@ -132,7 +134,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <SellerRoute> */}
-              <UpdateProduct />
+            <UpdateProduct />
             {/* </SellerRoute> */}
           </PrivateRoute>
         ),
@@ -144,7 +146,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <SellerRoute> */}
-              <UpdateAdvertisements />
+            <UpdateAdvertisements />
             {/* </SellerRoute> */}
           </PrivateRoute>
         ),
@@ -156,7 +158,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <SellerRoute> */}
-              <AddAdvertisement />
+            <AddAdvertisement />
             {/* </SellerRoute> */}
           </PrivateRoute>
         ),
@@ -166,7 +168,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <SellerRoute> */}
-              <MyAdvertisements />
+            <MyAdvertisements />
             {/* </SellerRoute> */}
           </PrivateRoute>
         ),
@@ -178,7 +180,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <AdminRoute> */}
-              <AllUsers />
+            <AllUsers />
             {/* </AdminRoute> */}
           </PrivateRoute>
         ),
@@ -188,7 +190,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <AdminRoute> */}
-              <AllProduct />
+            <AllProduct />
             {/* </AdminRoute> */}
           </PrivateRoute>
         ),
@@ -198,7 +200,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <AdminRoute> */}
-              <AllAds />
+            <AllAds />
             {/* </AdminRoute> */}
           </PrivateRoute>
         ),
@@ -208,7 +210,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             {/* <AdminRoute> */}
-              <AllOrders />
+            <AllOrders />
             {/* </AdminRoute> */}
           </PrivateRoute>
         ),

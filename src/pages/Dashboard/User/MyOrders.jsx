@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { Link } from "react-router";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 
 const MyOrders = () => {
   const axiosSecure = useAxiosSecure();
@@ -19,7 +20,7 @@ const MyOrders = () => {
   });
 
 
-  if (isLoading) return <div className="text-center py-10 text-white">Loading orders...</div>;
+  if (isLoading) return <LoadingSpinner/>;
   if (isError) return <div className="text-center py-10 text-red-500">Failed to load orders</div>;
 
   return (

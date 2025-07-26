@@ -12,7 +12,6 @@ import { Link, useLoaderData } from "react-router";
 
 const AllProducts = () => {
   const products = useLoaderData();
-  console.log(products);
 
   const [sortBy, setSortBy] = useState("price-low-high");
   const [showFilters, setShowFilters] = useState(false);
@@ -137,7 +136,7 @@ const AllProducts = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredAndSortedProducts.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="bg-white/10 backdrop-blur-md rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-white/20 overflow-hidden group"
             >
               {/* Product Image */}
