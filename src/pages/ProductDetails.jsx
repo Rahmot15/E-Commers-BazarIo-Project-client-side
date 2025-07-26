@@ -20,7 +20,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import GradientAll from "../Components/Shared/Gradient/GradientAll";
 import { toast } from "react-toastify";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -164,8 +164,9 @@ const ProductDetails = () => {
                 <button
                   onClick={() => setIsModalOpen(true)}
                   disabled={isDisabled}
-                  className="btn bg-green-500 hover:bg-green-600 text-white border-none disabled:opacity-50"
+                  className="btn bg-green-500 hover:bg-green-600 text-white border-none disabled:opacity-50 flex items-center gap-2"
                 >
+                  <ShoppingCart size={18} />
                   Buy Product
                 </button>
 

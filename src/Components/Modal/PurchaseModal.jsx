@@ -10,6 +10,11 @@ import {
   Info,
 } from "lucide-react";
 import useAuth from "../../hooks/useAuth";
+import PaymentForm from "../../pages/Dashboard/Payment/PaymentForm";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
 
 const PurchaseModal = ({ isOpen, setIsOpen, product }) => {
   const { user } = useAuth();
@@ -128,11 +133,11 @@ const PurchaseModal = ({ isOpen, setIsOpen, product }) => {
                   </p>
                 </div>
 
-                {/* Pay Now */}
-                <button className="btn w-full bg-green-500 hover:bg-green-600 text-white border-none">
-                  <BadgeDollarSign className="mr-2" />
-                  Pay ৳{todayPrice} Now
-                </button>
+                {/* Payment */}
+                <Elements stripe={stripePromise}>
+                  <PaymentForm todayPrice={todayPrice} />
+                </Elements>
+
               </Dialog.Panel>
             </Transition.Child>
           </div>
