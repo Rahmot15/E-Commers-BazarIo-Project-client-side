@@ -11,7 +11,7 @@ import {
   DollarSign,
   Flame,
 } from "lucide-react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router";
 import { imageUpload } from "../../../api/utils";
@@ -82,6 +82,7 @@ const UpdateAdvertisement = () => {
       ...data,
       bannerImage: previewImage,
       updatedAt: new Date().toISOString(),
+      status: ads.status,
     };
 
     try {
@@ -292,6 +293,7 @@ const UpdateAdvertisement = () => {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

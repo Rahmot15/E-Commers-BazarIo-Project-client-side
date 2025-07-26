@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import LoadingSpinner from "./Shared/LoadingSpinner";
 
 const Container = () => {
   const axiosSecure = useAxiosSecure();
@@ -39,7 +40,7 @@ const Container = () => {
   };
 
   if (isLoading) {
-    return <div className="text-center text-white">Loading...</div>;
+    return <LoadingSpinner/>;
   }
 
   return (
