@@ -135,7 +135,7 @@ const PurchaseModal = ({ isOpen, setIsOpen, product }) => {
 
                 {/* Payment */}
                 <Elements stripe={stripePromise}>
-                  <PaymentForm todayPrice={todayPrice} />
+                  <PaymentForm todayPrice={todayPrice} product={product}/>
                 </Elements>
 
               </Dialog.Panel>
