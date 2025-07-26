@@ -11,10 +11,17 @@ const MyAdvertisements = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
-  const { data: advertisements = [], isLoading, isError } = useQuery({
+  const {
+    data: advertisements = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["myAdvertisements", user?.email],
+    enabled: !!user?.email, // only run when email exists
     queryFn: async () => {
-      const res = await axiosSecure.get("/advertisements");
+      const res = await axiosSecure.get(
+        `/myAdvertisements?email=${user.email}`
+      );
       return res.data;
     },
   });
@@ -23,27 +30,31 @@ const MyAdvertisements = () => {
   const [filterStatus, setFilterStatus] = useState("all");
 
   const handleDelete = async (id) => {
-      const result = await Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
-      });
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
 
-      if (result.isConfirmed) {
-        try {
-          await axiosSecure.delete(`/advertisements/${id}`);
-          Swal.fire("Deleted!", "Your Advertisements has been deleted.", "success");
-          queryClient.invalidateQueries(["myAdvertisements", user?.email]);
-        } catch (error) {
-          Swal.fire("Error!", "Failed to delete the Advertisements.", "error");
-          console.error(error);
-        }
+    if (result.isConfirmed) {
+      try {
+        await axiosSecure.delete(`/advertisements/${id}`);
+        Swal.fire(
+          "Deleted!",
+          "Your Advertisements has been deleted.",
+          "success"
+        );
+        queryClient.invalidateQueries(["myAdvertisements", user?.email]);
+      } catch (error) {
+        Swal.fire("Error!", "Failed to delete the Advertisements.", "error");
+        console.error(error);
       }
-    };
+    }
+  };
 
   const filteredAds = advertisements.filter((ad) => {
     const matchesSearch =
@@ -79,7 +90,10 @@ const MyAdvertisements = () => {
   };
 
   if (isLoading) return <p className="text-center text-white">Loading...</p>;
-  if (isError) return <p className="text-center text-red-400">Failed to load advertisements</p>;
+  if (isError)
+    return (
+      <p className="text-center text-red-400">Failed to load advertisements</p>
+    );
 
   return (
     <div className="">
@@ -103,10 +117,18 @@ const MyAdvertisements = () => {
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
-            <option className="text-gray-800" value="all">All</option>
-            <option className="text-gray-800" value="approved">Approved</option>
-            <option className="text-gray-800" value="pending">Pending</option>
-            <option className="text-gray-800" value="rejected">Rejected</option>
+            <option className="text-gray-800" value="all">
+              All
+            </option>
+            <option className="text-gray-800" value="approved">
+              Approved
+            </option>
+            <option className="text-gray-800" value="pending">
+              Pending
+            </option>
+            <option className="text-gray-800" value="rejected">
+              Rejected
+            </option>
           </select>
         </div>
 
@@ -131,7 +153,10 @@ const MyAdvertisements = () => {
                     {renderStatusBadge(ad.status)}
                   </td>
                   <td className="p-4 flex justify-center gap-2">
-                    <Link to={`/dashboard/updateAdvertisements/${ad._id}`} className="bg-blue-500 px-3 py-2 rounded text-white">
+                    <Link
+                      to={`/dashboard/updateAdvertisements/${ad._id}`}
+                      className="bg-blue-500 px-3 py-2 rounded text-white"
+                    >
                       <Edit className="w-4 h-4" />
                     </Link>
                     <button
@@ -143,8 +168,23 @@ const MyAdvertisements = () => {
                   </td>
                 </tr>
               ))}
+
             </tbody>
           </table>
+              {filteredAds.length === 0 && (
+                <div className="flex text-center flex-col items-center justify-center my-6 text-gray-500">
+                  <svg
+                    className="w-12 h-12 mb-2"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 4v16m8-8H4" />
+                  </svg>
+                  <p className="text-xl">No ads found for your account.</p>
+                </div>
+              )}
         </div>
       </div>
     </div>

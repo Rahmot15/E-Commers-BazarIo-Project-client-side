@@ -86,17 +86,17 @@ const SidebarContent = ({ onClose }) => {
         </div>
 
         <nav className="mt-4 flex flex-col gap-1 px-4">
-          {/* {role === "customer" && ( */}
+          {role === "customer" && (
             <CustomerMenu linkClass={linkClass} onClose={onClose} />
-          {/* )} */}
-          <p>Seller</p>
-          {/* {role === "seller" && ( */}
+          )}
+
+          {role === "seller" && (
             <SellerMenu linkClass={linkClass} onClose={onClose} />
-          {/* )} */}
-          <p>Admin</p>
-          {/* {role === "admin" && ( */}
+          )}
+
+          {role === "admin" && (
             <AdminMenu linkClass={linkClass} onClose={onClose} />
-          {/* )} */}
+          )}
         </nav>
       </div>
 

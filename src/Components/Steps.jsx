@@ -2,6 +2,7 @@ import { ShoppingBasket, Truck, HeartHandshake } from "lucide-react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { Link } from "react-router";
 const steps = [
   {
     icon: <ShoppingBasket className="w-12 h-12 text-green-800" />,
@@ -71,9 +72,9 @@ const Steps = () => {
             </div>
           ))}
         </div>
-        <button className="btn btn-warning text-lg font-semibold px-8 rounded-full shadow mt-4">
+        <Link to={'allProducts'} className="btn btn-warning text-lg font-semibold px-8 rounded-full shadow mt-4">
           Start Shopping
-        </button>
+        </Link>
       </div>
     </section>
   );

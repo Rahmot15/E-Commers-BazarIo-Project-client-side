@@ -16,15 +16,16 @@ import {
 } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { imageUpload } from "../../../api/utils";
 import { useNavigate } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddAdvertisement = () => {
+  const axiosSecure = useAxiosSecure();
   const [previewImage, setPreviewImage] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register,
@@ -83,10 +84,7 @@ const AddAdvertisement = () => {
     console.log("Advertisement data:", adsData);
 
     try {
-      const advertisementsData = await axios.post(
-        `${import.meta.env.VITE_API_URL}/add-advertisements`,
-        adsData
-      );
+      await axiosSecure.post("/add-advertisements", adsData);
       toast.success("Advertisement created successfully!", {
         position: "top-right",
         autoClose: 3000,
@@ -95,12 +93,11 @@ const AddAdvertisement = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      console.log(advertisementsData);
       // Reset form
       reset();
       setPreviewImage(null);
       setIsSubmitting(false);
-      navigate('/dashboard/my-ads')
+      navigate("/dashboard/my-ads");
     } catch (err) {
       console.error(err);
       toast.error("Failed to add product");
@@ -221,7 +218,6 @@ const AddAdvertisement = () => {
                 </label>
               </div>
             </div>
-
 
             {/* Description Field */}
             <div>

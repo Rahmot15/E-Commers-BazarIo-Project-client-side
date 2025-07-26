@@ -9,6 +9,7 @@ import { Calendar, Store, Tag, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import LoadingSpinner from "./Shared/LoadingSpinner";
+import { Link } from "react-router";
 
 const Advertisement = () => {
   const axiosSecure = useAxiosSecure();
@@ -102,12 +103,12 @@ const Advertisement = () => {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 flex items-center gap-2 transform hover:scale-105">
+                    <Link to={'allProducts'} className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 flex items-center gap-2 transform hover:scale-105">
                       <ExternalLink size={20} /> Shop Now
-                    </button>
-                    <button className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white/30">
+                    </Link>
+                    <Link to={'allProducts'} className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white/30">
                       View Offer
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

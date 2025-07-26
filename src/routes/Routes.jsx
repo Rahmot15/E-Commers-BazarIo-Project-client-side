@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
         path: "/allProducts",
         Component: AllProducts,
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/products`),
-        hydrateFallbackElement: <LoadingSpinner/>
+        hydrateFallbackElement: <LoadingSpinner />,
       },
       {
         path: "/productDetails/:id",
@@ -113,9 +113,9 @@ export const router = createBrowserRouter([
         path: "add-product",
         element: (
           <PrivateRoute>
-            {/* <SellerRoute> */}
-            <AddProduct />
-            {/* </SellerRoute> */}
+            <SellerRoute>
+              <AddProduct />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -123,9 +123,9 @@ export const router = createBrowserRouter([
         path: "my-products",
         element: (
           <PrivateRoute>
-            {/* <SellerRoute> */}
-            <MyProducts />
-            {/* </SellerRoute> */}
+            <SellerRoute>
+              <MyProducts />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -133,9 +133,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/updateProduct/:id",
         element: (
           <PrivateRoute>
-            {/* <SellerRoute> */}
-            <UpdateProduct />
-            {/* </SellerRoute> */}
+            <SellerRoute>
+              <UpdateProduct />
+            </SellerRoute>
           </PrivateRoute>
         ),
         loader: ({ params }) =>
@@ -145,9 +145,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/updateAdvertisements/:id",
         element: (
           <PrivateRoute>
-            {/* <SellerRoute> */}
-            <UpdateAdvertisements />
-            {/* </SellerRoute> */}
+            <SellerRoute>
+              <UpdateAdvertisements />
+            </SellerRoute>
           </PrivateRoute>
         ),
         loader: ({ params }) =>
@@ -157,9 +157,9 @@ export const router = createBrowserRouter([
         path: "add-ad",
         element: (
           <PrivateRoute>
-            {/* <SellerRoute> */}
-            <AddAdvertisement />
-            {/* </SellerRoute> */}
+            <SellerRoute>
+              <AddAdvertisement />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -167,9 +167,9 @@ export const router = createBrowserRouter([
         path: "my-ads",
         element: (
           <PrivateRoute>
-            {/* <SellerRoute> */}
-            <MyAdvertisements />
-            {/* </SellerRoute> */}
+            <SellerRoute>
+              <MyAdvertisements />
+            </SellerRoute>
           </PrivateRoute>
         ),
       },
@@ -179,9 +179,9 @@ export const router = createBrowserRouter([
         path: "all-users",
         element: (
           <PrivateRoute>
-            {/* <AdminRoute> */}
-            <AllUsers />
-            {/* </AdminRoute> */}
+            <AdminRoute>
+              <AllUsers />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -189,9 +189,9 @@ export const router = createBrowserRouter([
         path: "all-products",
         element: (
           <PrivateRoute>
-            {/* <AdminRoute> */}
-            <AllProduct />
-            {/* </AdminRoute> */}
+            <AdminRoute>
+              <AllProduct />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -199,9 +199,9 @@ export const router = createBrowserRouter([
         path: "all-ads",
         element: (
           <PrivateRoute>
-            {/* <AdminRoute> */}
-            <AllAds />
-            {/* </AdminRoute> */}
+            <AdminRoute>
+              <AllAds />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -209,9 +209,9 @@ export const router = createBrowserRouter([
         path: "all-orders",
         element: (
           <PrivateRoute>
-            {/* <AdminRoute> */}
-            <AllOrders />
-            {/* </AdminRoute> */}
+            <AdminRoute>
+              <AllOrders />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
