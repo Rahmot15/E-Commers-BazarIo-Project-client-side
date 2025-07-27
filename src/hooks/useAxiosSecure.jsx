@@ -5,7 +5,7 @@ const useAxiosSecure = () => {
   const { user } = useAuth();
 
   const instance = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://bazario-server-side.vercel.app",
   });
 
   instance.interceptors.request.use(
