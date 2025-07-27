@@ -11,11 +11,12 @@ const AllUsers = () => {
   const [newRole, setNewRole] = useState("");
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { data: users = [], isLoading } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", searchTerm],
     queryFn: async () => {
-      const { data } = await axiosSecure("/all-users");
+      const { data } = await axiosSecure(`/all-users?search=${searchTerm}`);
       return data;
     },
   });
@@ -113,6 +114,16 @@ const AllUsers = () => {
             </div>
           </div>
         </div>
+
+        <form onSubmit={(e) => e.preventDefault()} className="w-full mb-6">
+          <input
+            type="text"
+            placeholder="Search by name or email"
+            className="input input-bordered w-full max-w-md"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </form>
 
         {/* Users Table */}
         <div className="card rounded-b-2xl overflow-hidden bg-base-100 shadow-xl">

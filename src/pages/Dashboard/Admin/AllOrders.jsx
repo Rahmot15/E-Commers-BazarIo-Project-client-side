@@ -15,7 +15,7 @@ import { Link } from "react-router";
 
 const AllOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
 
   const axiosSecure = useAxiosSecure();
 

@@ -9,6 +9,8 @@ import {
   Store,
   DollarSign,
   Filter,
+  ChevronRight,
+  ChevronLeft,
 } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -19,7 +21,7 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 
-const AllProduct = () => {
+const AllProductAdmin = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [filterStatus, setFilterStatus] = useState("all");
@@ -28,6 +30,9 @@ const AllProduct = () => {
     productId: null,
   });
   const [rejectionReason, setRejectionReason] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
   const queryClient = useQueryClient();
 
@@ -152,6 +157,13 @@ const AllProduct = () => {
       ? products
       : products.filter((product) => product.status === filterStatus);
 
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -228,7 +240,10 @@ const AllProduct = () => {
                             : "btn-primary"
                           : "btn-outline"
                       }`}
-                      onClick={() => setFilterStatus(status)}
+                      onClick={() => {
+                        setFilterStatus(status);
+                        setCurrentPage(1);
+                      }}
                     >
                       {status.charAt(0).toUpperCase() + status.slice(1)} (
                       {
@@ -263,9 +278,9 @@ const AllProduct = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredProducts.map((product, index) => (
+                  {paginatedProducts.map((product, index) => (
                     <tr key={product._id} className="hover">
-                      <td>{index + 1}</td>
+                      <td>{startIndex + index + 1}</td>
                       <td>
                         <div className="flex items-center gap-3">
                           <div className="avatar">
@@ -372,6 +387,36 @@ const AllProduct = () => {
                   ))}
                 </tbody>
               </table>
+
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center gap-4 p-6 border-t border-base-300">
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="btn btn-outline btn-sm"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    Previous
+                  </button>
+
+                  <div className="text-sm text-base-content/70">
+                    Page {currentPage} of {totalPages}
+                  </div>
+
+                  <button
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="btn btn-outline btn-sm"
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -434,4 +479,4 @@ const AllProduct = () => {
   );
 };
 
-export default AllProduct;
+export default AllProductAdmin;

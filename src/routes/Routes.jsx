@@ -14,7 +14,6 @@ import MyProducts from "../pages/Dashboard/Vendor/MyProducts";
 import AddAdvertisement from "../pages/Dashboard/Vendor/AddAdvertisement";
 import MyAdvertisements from "../pages/Dashboard/Vendor/MyAdvertisements";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
-import AllProduct from "../pages/Dashboard/Admin/AllProduct";
 import AllAds from "../pages/Dashboard/Admin/AllAds";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 import PrivateRoute from "./PrivateRoute";
@@ -26,6 +25,7 @@ import UpdateAdvertisements from "../pages/Dashboard/Vendor/UpdateAdvertisements
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import ErrorPage from "../pages/ErrorPage";
 import DashboardRedirect from "../Components/Dashboard/DashboardRedirect";
+import AllProductAdmin from "../pages/Dashboard/Admin/AllProductAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -192,7 +192,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AdminRoute>
-              <AllProduct />
+              <AllProductAdmin />
             </AdminRoute>
           </PrivateRoute>
         ),
