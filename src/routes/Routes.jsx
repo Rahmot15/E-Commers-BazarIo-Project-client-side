@@ -26,6 +26,7 @@ import AdminRoute from "./AdninRoute";
 import UpdateAdvertisements from "../pages/Dashboard/Vendor/UpdateAdvertisements";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 import ErrorPage from "../pages/ErrorPage";
+import DashboardRedirect from "../Components/Dashboard/DashboardRedirect";
 
 export const router = createBrowserRouter([
   {
@@ -72,14 +73,14 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout></DashboardLayout>,
     children: [
-      // {
-      //   index: true,
-      //   element: (
-      //     <PrivateRoute>
-      //       <Dashboard />
-      //     </PrivateRoute>
-      //   ),
-      // },
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <DashboardRedirect />
+          </PrivateRoute>
+        ),
+      },
       {
         path: "profile",
         element: (
