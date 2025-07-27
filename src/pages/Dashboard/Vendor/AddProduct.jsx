@@ -12,14 +12,15 @@ import {
   Plus,
   X,
 } from "lucide-react";
-import axios from "axios";
 import { imageUpload } from "../../../api/utils";
 import { toast } from "react-toastify";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const AddProduct = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure()
   const navigate = useNavigate()
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -131,8 +132,8 @@ const AddProduct = () => {
       };
 
       try {
-        const data = await axios.post(
-          `${import.meta.env.VITE_API_URL}/add-products`,
+        const data = await axiosSecure.post(
+          '/add-products',
           productData
         );
         toast.success("Product Added Successfully!");

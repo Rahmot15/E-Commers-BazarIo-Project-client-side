@@ -5,7 +5,6 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
-import { Helmet } from "react-helmet";
 
 const WatchList = () => {
   const { user } = useAuth();
@@ -57,9 +56,6 @@ const WatchList = () => {
 
   return (
     <div className="bg-white/10 max-w-6xl mx-auto backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl overflow-hidden">
-       <Helmet>
-        <title>BazarIo | WatchList</title>
-      </Helmet>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>

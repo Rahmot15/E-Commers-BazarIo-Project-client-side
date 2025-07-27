@@ -13,32 +13,50 @@ import {
 } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useLoaderData, useNavigate } from "react-router";
+import {  useNavigate, useParams } from "react-router";
 import { imageUpload } from "../../../api/utils";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
 
 const UpdateAdvertisement = () => {
-  const ads = useLoaderData();
+  const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const [previewImage, setPreviewImage] = useState(ads.bannerImage || null);
   const [dragActive, setDragActive] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { data: ads = {}, isLoading } = useQuery({
+    queryKey: ["advertisement", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/advertisements/${id}`);
+      return res.data;
+    },
+  });
+
+  const [previewImage, setPreviewImage] = useState(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      title: ads.title,
-      description: ads.description,
-      shopName: ads.shopName,
-      discount: ads.discount,
-      originalPrice: ads.originalPrice,
-      isHot: ads.isHot,
-    },
-  });
+    reset,
+  } = useForm();
+
+
+  React.useEffect(() => {
+    if (ads?._id) {
+      reset({
+        title: ads.title,
+        description: ads.description,
+        shopName: ads.shopName,
+        discount: ads.discount,
+        originalPrice: ads.originalPrice,
+        isHot: ads.isHot,
+      });
+      setPreviewImage(ads.bannerImage || null);
+    }
+  }, [ads, reset]);
 
   const handleImageUpload = async (file) => {
     if (file && file.type.startsWith("image/")) {
@@ -102,6 +120,10 @@ const UpdateAdvertisement = () => {
   const removeImage = () => {
     setPreviewImage(null);
   };
+
+  if(isLoading) {
+    return <LoadingSpinner/>
+  }
 
   return (
     <div className="">

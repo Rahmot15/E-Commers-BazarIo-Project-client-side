@@ -28,7 +28,6 @@ import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import PurchaseModal from "../Components/Modal/PurchaseModal";
 import useRole from "../hooks/useRole";
-import { Helmet } from "react-helmet";
 
 const ProductDetails = () => {
   const products = useLoaderData();
@@ -165,9 +164,6 @@ const ProductDetails = () => {
 
   return (
     <GradientAll>
-      <Helmet>
-        <title>BazarIo | Product Details {products?._id || ""}</title>
-      </Helmet>
       <div className="max-w-6xl my-12 mx-auto relative z-10">
         {/* Product Info */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">

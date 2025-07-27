@@ -9,7 +9,7 @@ import {
   X,
 } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
-import { Helmet } from "react-helmet";
+
 
 const AllProducts = () => {
   const products = useLoaderData();
@@ -50,9 +50,6 @@ const AllProducts = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>BazarIo | All Product</title>
-      </Helmet>
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-center">
           <div className="text-center">

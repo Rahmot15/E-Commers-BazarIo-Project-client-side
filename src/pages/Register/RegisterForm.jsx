@@ -8,8 +8,6 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { FcGoogle } from "react-icons/fc";
 import { saveUserInDb } from "../../api/utils";
-import { Helmet } from "react-helmet";
-
 const RegisterForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { createUser, signInGoogle } = useAuth();
@@ -78,9 +76,6 @@ const RegisterForm = () => {
 
   return (
     <GradientWrapper>
-       <Helmet>
-        <title>BazarIo | Register </title>
-      </Helmet>
       <form onSubmit={handleSubmit(handleRegister)} className="space-y-6">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-2">

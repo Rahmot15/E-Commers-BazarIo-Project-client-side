@@ -17,7 +17,6 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers";
 import AllProduct from "../pages/Dashboard/Admin/AllProduct";
 import AllAds from "../pages/Dashboard/Admin/AllAds";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
-import Dashboard from "../pages/Dashboard/Common/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import UpdateProduct from "../pages/Dashboard/Vendor/UpdateProduct";
 import Profile from "../pages/Dashboard/Common/Profile";
@@ -32,7 +31,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
-    errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -155,8 +154,6 @@ export const router = createBrowserRouter([
             </SellerRoute>
           </PrivateRoute>
         ),
-        loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_URL}/advertisements/${params.id}`),
       },
       {
         path: "add-ad",
