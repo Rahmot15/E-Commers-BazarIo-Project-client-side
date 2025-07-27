@@ -81,7 +81,6 @@ const AddAdvertisement = () => {
       bannerImage: previewImage,
       createdAt: new Date().toISOString(),
     };
-    console.log("Advertisement data:", adsData);
 
     try {
       await axiosSecure.post("/add-advertisements", adsData);

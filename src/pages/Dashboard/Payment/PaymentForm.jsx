@@ -16,7 +16,6 @@ const PaymentForm = ({ todayPrice, product }) => {
 
   const amountInCents = todayPrice * 100;
   const parcelId = product._id;
-  console.log(amountInCents);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +36,6 @@ const PaymentForm = ({ todayPrice, product }) => {
 
     if (error) {
       setError(error.message);
-      console.log(error);
     } else {
       setError("");
       console.log("paymentMethod", paymentMethod);
@@ -63,8 +61,6 @@ const PaymentForm = ({ todayPrice, product }) => {
       } else {
         setError("");
         if (result.paymentIntent.status === "succeeded") {
-          console.log("Payment succeeded!");
-          console.log("result", result);
           const transactionId = result.paymentIntent.id;
 
           const paymentData = {

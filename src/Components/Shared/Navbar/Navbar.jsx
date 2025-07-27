@@ -23,7 +23,6 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const { user, signOutUser } = useAuth();
-  // console.log("User Image URL:", user?.photoURL);
 
   // Scroll Hide/Show Navbar Logic
   useEffect(() => {
@@ -31,9 +30,9 @@ const Navbar = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setShowNavbar(false); // hide when scrolling down
+        setShowNavbar(false);
       } else {
-        setShowNavbar(true); // show when scrolling up
+        setShowNavbar(true);
       }
 
       setLastScrollY(currentScrollY);

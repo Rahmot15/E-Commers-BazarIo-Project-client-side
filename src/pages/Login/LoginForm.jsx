@@ -28,7 +28,6 @@ const LoginForm = () => {
     const { email, password } = data;
     signInUser(email, password)
       .then(async (result) => {
-        console.log(result);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -56,7 +55,6 @@ const LoginForm = () => {
   const handleGoogle = () => {
     signInGoogle()
       .then(async (result) => {
-        console.log(result);
         Swal.fire({
           position: "center",
           icon: "success",

@@ -19,8 +19,6 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const UpdateAdvertisement = () => {
   const ads = useLoaderData();
-  console.log(ads);
-
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const [previewImage, setPreviewImage] = useState(ads.bannerImage || null);

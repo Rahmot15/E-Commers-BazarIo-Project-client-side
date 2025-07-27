@@ -23,8 +23,6 @@ const RegisterForm = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    console.log("Form Data:", data);
-    // এখানে তুমি API call করতে পারো, যেমন Firebase বা তোমার backend এ
     reset();
 
     createUser(data.email, data.password)
@@ -49,7 +47,6 @@ const RegisterForm = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
         toast.error("Register failed: " + error.message);
       });
   };
@@ -57,7 +54,6 @@ const RegisterForm = () => {
   const handleGoogle = () => {
     signInGoogle()
       .then(async (result) => {
-        console.log(result);
         Swal.fire({
           position: "center",
           icon: "success",
@@ -76,16 +72,9 @@ const RegisterForm = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
         toast.error("Login failed: " + error.message);
       });
   };
-
-  // const onSubmit = (data) => {
-  //   console.log("Form Data:", data);
-  //   // এখানে তুমি API call করতে পারো, যেমন Firebase বা তোমার backend এ
-  //   reset();
-  // };
 
   return (
     <GradientWrapper>

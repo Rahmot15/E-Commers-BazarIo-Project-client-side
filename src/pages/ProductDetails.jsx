@@ -149,7 +149,6 @@ const ProductDetails = () => {
     const checkWatchlist = async () => {
       try {
         const res = await axiosSecure.get(`/watchlist?email=${user.email}`);
-        console.log("Watchlist fetched:", res.data); // 🐞 Debug
 
         const alreadyAdded = res.data.some(
           (item) => item.productId === products._id
