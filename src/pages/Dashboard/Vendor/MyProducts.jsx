@@ -122,13 +122,6 @@ const MyProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.length === 0 && (
-                  <tr>
-                    <td colSpan="6" className="text-center p-8 text-white">
-                      No products found for your account.
-                    </td>
-                  </tr>
-                )}
                 {products.map((product) => (
                   <tr
                     key={product._id}
@@ -183,6 +176,20 @@ const MyProducts = () => {
                 ))}
               </tbody>
             </table>
+            {products.length === 0 && (
+              <div className="flex text-center flex-col items-center justify-center my-6 text-gray-500">
+                <svg
+                  className="w-12 h-12 mb-2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 4v16m8-8H4" />
+                </svg>
+                <p className="text-xl">No products found for your account.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

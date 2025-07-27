@@ -9,6 +9,7 @@ import {
   X,
 } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
+import { Helmet } from "react-helmet";
 
 const AllProducts = () => {
   const products = useLoaderData();
@@ -40,7 +41,7 @@ const AllProducts = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("bn-BD", {
+    return date.toLocaleDateString("en", {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -49,14 +50,17 @@ const AllProducts = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>BazarIo | All Product</title>
+      </Helmet>
       <div className="container mx-auto px-4 py-6">
         <div className="flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
-              🛍️ সকল পণ্য
+            <h1 className="text-4xl bitter-font font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+              🛍️ All products
             </h1>
-            <p className="text-gray-300 text-lg">
-              সকল বাজারের সাম্প্রতিক পণ্যের তালিকা
+            <p className="text-gray-300 parkinsans-font text-lg">
+              List of latest products from all markets
             </p>
           </div>
         </div>
@@ -71,7 +75,7 @@ const AllProducts = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="পণ্য খুঁজুন..."
+                placeholder="Find products..."
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
@@ -86,19 +90,19 @@ const AllProducts = () => {
                 className="appearance-none bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-4 py-3 pr-8 text-white focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
               >
                 <option value="" className="bg-slate-800 text-white">
-                  সাজান
+                  Sort
                 </option>
                 <option
                   value="price-low-high"
                   className="bg-slate-800 text-white"
                 >
-                  🔼 দাম: কম থেকে বেশি
+                  🔼 Price: low to high
                 </option>
                 <option
                   value="price-high-low"
                   className="bg-slate-800 text-white"
                 >
-                  🔽 দাম: বেশি থেকে কম
+                  🔽 Price: High to low
                 </option>
               </select>
               <ArrowUpDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
@@ -120,10 +124,10 @@ const AllProducts = () => {
 
               <div className="mt-6 flex space-x-3">
                 <button className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg">
-                  ফিল্টার প্রয়োগ করুন
+                  Apply filter
                 </button>
                 <button className="px-6 py-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all duration-300">
-                  রিসেট করুন
+                  Reset
                 </button>
               </div>
             </div>
@@ -179,10 +183,10 @@ const AllProducts = () => {
                 <div className="mt-4 p-4 bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-sm rounded-lg border border-green-400/30">
                   <div className="text-center">
                     <div className="text-2xl font-bold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
-                      ৳{product.price}
+                      ${product.price}
                     </div>
                     <div className="text-sm text-gray-400">
-                      প্রতি {product.pricePerUnit}
+                      Every {product.pricePerUnit}
                     </div>
                   </div>
                 </div>
@@ -192,20 +196,13 @@ const AllProducts = () => {
                   to={`/productDetails/${product._id}`}
                   className="w-full mt-4 flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
-                  <Eye className="w-4 h-4" />
-                  <span>বিস্তারিত দেখুন</span>
+                  <Eye className="w-4 h-4 bitter-font" />
+                  <span>See Details</span>
                 </Link>
               </div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Load More Button */}
-      <div className="relative text-center pb-8">
-        <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-          আরও পণ্য লোড করুন
-        </button>
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import {
 import useAuth from "../../../hooks/useAuth";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -38,6 +39,9 @@ const Profile = () => {
 
   return (
     <div>
+       <Helmet>
+        <title>BazarIo | Profile </title>
+      </Helmet>
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">

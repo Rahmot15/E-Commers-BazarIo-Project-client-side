@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { Link } from "react-router";
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
+import { Helmet } from "react-helmet";
 
 const MyOrders = () => {
   const axiosSecure = useAxiosSecure();
@@ -25,6 +26,9 @@ const MyOrders = () => {
 
   return (
     <div className="bg-white/10 max-w-6xl mx-auto backdrop-blur-sm rounded-2xl border border-white/20 shadow-xl overflow-hidden">
+       <Helmet>
+        <title>BazarIo | My Orders</title>
+      </Helmet>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>

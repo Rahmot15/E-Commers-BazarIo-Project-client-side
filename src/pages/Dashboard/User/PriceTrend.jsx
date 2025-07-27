@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet";
 
 const PriceTrend = () => {
   const axiosSecure = useAxiosSecure();
@@ -69,6 +70,9 @@ const PriceTrend = () => {
 
   return (
     <div className=" space-y-6 bg-white/10 backdrop-blur-md border border-white/20 shadow-lg rounded-2xl p-6">
+       <Helmet>
+        <title>BazarIo | Price Trend</title>
+      </Helmet>
       <div className="flex justify-between items-center">
         <h1 className="text-2xl text-white font-bold">Price Trends</h1>
         <div className="flex gap-2">

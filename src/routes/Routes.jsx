@@ -25,11 +25,13 @@ import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdninRoute";
 import UpdateAdvertisements from "../pages/Dashboard/Vendor/UpdateAdvertisements";
 import LoadingSpinner from "../Components/Shared/LoadingSpinner";
+import ErrorPage from "../pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
+    errorElement: <ErrorPage/>,
     children: [
       {
         index: true,
@@ -53,6 +55,10 @@ export const router = createBrowserRouter([
           fetch(`${import.meta.env.VITE_API_URL}/products/${params.id}`),
       },
     ],
+  },
+  {
+    path: "#",
+    Component: <ErrorPage />,
   },
   {
     path: "/login",
@@ -133,9 +139,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/updateProduct/:id",
         element: (
           <PrivateRoute>
-            <SellerRoute>
-              <UpdateProduct />
-            </SellerRoute>
+            <UpdateProduct />
           </PrivateRoute>
         ),
         loader: ({ params }) =>

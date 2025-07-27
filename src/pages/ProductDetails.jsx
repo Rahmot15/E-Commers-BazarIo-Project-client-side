@@ -27,10 +27,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import PurchaseModal from "../Components/Modal/PurchaseModal";
+import useRole from "../hooks/useRole";
+import { Helmet } from "react-helmet";
 
 const ProductDetails = () => {
   const products = useLoaderData();
   const { user } = useAuth();
+  const [role] = useRole();
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
@@ -102,7 +105,7 @@ const ProductDetails = () => {
     submitReview(newReview);
   };
 
-  const isDisabled = user?.role === "admin" || user?.role === "seller";
+  const isDisabled = role === "admin" || role === "seller";
 
   const { mutate: addToWatchlist } = useMutation({
     mutationFn: async (watchlistData) => {
@@ -163,6 +166,9 @@ const ProductDetails = () => {
 
   return (
     <GradientAll>
+      <Helmet>
+        <title>BazarIo | Product Details {products?._id || ""}</title>
+      </Helmet>
       <div className="max-w-6xl my-12 mx-auto relative z-10">
         {/* Product Info */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
@@ -177,7 +183,7 @@ const ProductDetails = () => {
             <div className="text-white">
               <h1 className="text-4xl font-bold mb-2">{products.itemName}</h1>
               <p className="text-2xl font-semibold text-yellow-300 mb-4">
-                ৳{products.pricePerUnit}/kg
+                ${products.pricePerUnit}/kg
               </p>
 
               <div className="space-y-2 mb-4">
@@ -200,7 +206,7 @@ const ProductDetails = () => {
               <div className="flex gap-4">
                 <button
                   onClick={handleAddToWatchlist}
-                  disabled={isInWatchlist}
+                  disabled={isDisabled}
                   className={`p-2 rounded-full transition-colors ${
                     isInWatchlist
                       ? "bg-red-500 text-white"
@@ -326,6 +332,7 @@ const ProductDetails = () => {
 
               <button
                 onClick={handleSubmitReview}
+                disabled={user?.email === products.vendorEmail}
                 className="btn bg-blue-500 hover:bg-blue-600 text-white border-none"
               >
                 Submit Review

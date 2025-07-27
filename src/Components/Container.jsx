@@ -19,7 +19,7 @@ const Container = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("bn-BD", {
+    return date.toLocaleDateString("en", {
       day: "numeric",
       month: "short",
       year: "numeric",
