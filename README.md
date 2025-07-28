@@ -66,15 +66,15 @@ Hosting: Firebase
 
 
 📁 Project Structure (Overview)
+
+```txt
 src/
 │
 ├── api/
 │   └── utils.js
-│
 ├── assets/
 │   ├── banner.jpg
 │   └── react.svg
-│
 ├── Components/
 │   ├── Dashboard/
 │   ├── Sidebar/
@@ -104,21 +104,17 @@ src/
 │   ├── Container.jsx
 │   ├── EmptyState.jsx
 │   └── StatsSection.jsx
-│
 ├── firebase/
 │   └── firebase.config.js
-│
 ├── hooks/
 │   ├── useApproveProduct.jsx
 │   ├── useAuth.jsx
 │   ├── useAxiosSecure.jsx
 │   ├── useRejectProduct.jsx
 │   └── useRole.js
-│
 ├── layouts/
 │   ├── DashboardLayout.jsx
 │   └── MainLayout.jsx
-│
 ├── pages/
 │   ├── Dashboard/
 │   │   ├── Admin/
@@ -143,7 +139,6 @@ src/
 │   │       └── UpdateProduct.jsx
 │   └── Home/
 │       └── Home.jsx
-│
 ├── Home/
 │   └── Home.jsx
 ├── Login/
