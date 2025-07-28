@@ -72,7 +72,7 @@ const AllOrders = () => {
   }
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden p-6">
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden md:px-6 px-2 py-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">

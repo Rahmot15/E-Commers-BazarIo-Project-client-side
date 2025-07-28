@@ -344,19 +344,23 @@ const ProductDetails = () => {
             ) : (
               reviews.map((review) => (
                 <div key={review._id} className="p-4 bg-white/5 rounded-xl">
-                  <div className="flex items-start justify-between mb-2">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
                     <div>
                       <h4 className="font-semibold text-white">
                         {review.userName}
                       </h4>
-                      <div className="flex items-center gap-2 text-sm text-gray-300">
-                        <Mail className="w-4 h-4" />
-                        <span>{review.userEmail}</span>
-                        <Clock className="w-4 h-4 ml-2" />
-                        <span>{review.date}</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-sm text-gray-300">
+                        <div className="flex items-center gap-1">
+                          <Mail className="w-4 h-4" />
+                          <span>{review.userEmail}</span>
+                        </div>
+                        <div className="flex items-center gap-1 sm:ml-4">
+                          <Clock className="w-4 h-4" />
+                          <span>{review.date}</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex">
+                    <div className="flex sm:justify-end gap-1 mt-1 sm:mt-0">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
                           key={star}

@@ -12,7 +12,7 @@ const DashboardLayout = () => {
 
       {/* Main Content */}
       <div className="flex-1 md:ml-64">
-        <div className="p-4 md:p-6">
+        <div className="p-2 md:p-6">
           {/* Page Content Render Here */}
           <div className="md:mt-0 mt-16">
             <Outlet />

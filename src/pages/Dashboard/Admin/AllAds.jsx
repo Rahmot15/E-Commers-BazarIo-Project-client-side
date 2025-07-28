@@ -127,7 +127,7 @@ const AllAds = () => {
   }
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden p-6">
+    <div className="bg-white/10 backdrop-blur-lg rounded-2xl overflow-hidden md:px-6 px-2 py-6">
       <div className="container mx-auto">
         {/* Header */}
         <div className="mb-8">

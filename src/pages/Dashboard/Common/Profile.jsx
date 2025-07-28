@@ -39,7 +39,7 @@ const Profile = () => {
   return (
     <div>
       {/* Main Content */}
-      <div className="relative z-10 container mx-auto px-4 py-8">
+      <div className="relative z-10 container mx-auto md:px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-8">
@@ -107,8 +107,8 @@ const Profile = () => {
                   </div>
 
                   {/* Quick Stats */}
-                  <div className="flex gap-4 justify-center lg:justify-start">
-                    <div className="stat p-4 bg-white/10 rounded-lg backdrop-blur-sm border border-white/20">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+                    <div className="stat p-4 bg-white/10 rounded-lg backdrop-blur-sm border border-white/20 w-full sm:w-auto">
                       <div className="stat-title text-sm text-gray-100 font-semibold">
                         Account Created
                       </div>
