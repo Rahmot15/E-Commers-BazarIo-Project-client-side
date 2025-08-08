@@ -10,9 +10,8 @@ BazarIo is a full-featured web application designed to streamline local market p
 
 ## 📸 Project Overview
 
-![BazarIo Screenshot](https://i.ibb.co.com/hxG1dSGS/screencapture-bazario-auth-23e7d-web-app-2025-08-08-18-22-50.png)
+![BazarIo Screenshot](https://i.ibb.co.com/rRbG5nqC/Screenshot-2025-08-08-182320.png)
 *A clean screenshot of the BazarIo application's homepage/dashboard, showcasing its modern UI.*
-*(Replace `images/project-screenshot.png` with the actual path to your screenshot/GIF.)*
 
 ---
 
@@ -115,7 +114,7 @@ Before you begin, ensure you have the following installed:
 
 This project requires a separate backend server to function correctly. Please refer to the backend repository for setup instructions:
 
-*   **Backend Repository:** [Link to your Backend Repository Here](YOUR_BACKEND_REPO_URL)
+*   **Backend Repository:** [Link to your Backend Repository Here]( https://github.com/Rahmot15/E-Commers-BazarIo-Project-server-side.git )
     *   *Replace `YOUR_BACKEND_REPO_URL` with the actual link to your Express.js + MongoDB backend repository.*
 
 ---
