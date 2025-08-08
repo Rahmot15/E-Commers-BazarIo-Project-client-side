@@ -8,6 +8,14 @@ BazarIo is a full-featured web application designed to streamline local market p
 
 ---
 
+## 📸 Project Overview
+
+![BazarIo Screenshot](https://i.ibb.co.com/hxG1dSGS/screencapture-bazario-auth-23e7d-web-app-2025-08-08-18-22-50.png)
+*A clean screenshot of the BazarIo application's homepage/dashboard, showcasing its modern UI.*
+*(Replace `images/project-screenshot.png` with the actual path to your screenshot/GIF.)*
+
+---
+
 ## 🚀 Key Features
 
 - 🔎 **Live Local Market Price Tracking:** View and compare daily prices of essential items from multiple markets.
@@ -47,6 +55,68 @@ BazarIo is a full-featured web application designed to streamline local market p
 - **sweetalert2**
 - **swiper**
 - **tailwindcss**
+
+---
+
+## ⚙️ How to Run Locally
+
+Follow these steps to set up and run the project on your local machine.
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+*   [Node.js](https://nodejs.org/en/download/) (LTS version recommended)
+*   [npm](https://www.npmjs.com/get-npm) (Node Package Manager, usually comes with Node.js) or [Yarn](https://yarnpkg.com/getting-started/install)
+
+### Frontend Setup (Client-Side)
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/Rahmat15/E-Commercs-Bazarlo-Project-client-side.git
+    ```
+2.  **Navigate into the project directory:**
+    ```bash
+    cd E-Commercs-Bazarlo-Project-client-side
+    ```
+3.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+4.  **Create a `.env` file:**
+    In the root of the project directory, create a file named `.env` and add your Firebase configuration and other necessary environment variables. Replace the placeholder values with your actual credentials.
+
+    ```
+    # Firebase Config
+    VITE_FIREBASE_API_KEY=YOUR_FIREBASE_API_KEY
+    VITE_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
+    VITE_FIREBASE_PROJECT_ID=YOUR_FIREBASE_PROJECT_ID
+    VITE_FIREBASE_STORAGE_BUCKET=YOUR_FIREBASE_STORAGE_BUCKET
+    VITE_FIREBASE_MESSAGING_SENDER_ID=YOUR_FIREBASE_MESSAGING_SENDER_ID
+    VITE_FIREBASE_APP_ID=YOUR_FIREBASE_APP_ID
+    VITE_FIREBASE_MEASUREMENT_ID=YOUR_FIREBASE_MEASUREMENT_ID
+
+    # API Endpoints
+    VITE_API_BASE_URL=http://localhost:5000 # Or your deployed backend URL
+    VITE_STRIPE_PK=YOUR_STRIPE_PUBLISHABLE_KEY
+    ```
+    *Note: The `VITE_API_BASE_URL` should point to your backend server. If running locally, it's typically `http://localhost:5000` (or whatever port your backend runs on).*
+
+5.  **Run the development server:**
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+    The application should now be running locally, usually accessible at `http://localhost:5173` (or a similar port).
+
+### Backend Setup
+
+This project requires a separate backend server to function correctly. Please refer to the backend repository for setup instructions:
+
+*   **Backend Repository:** [Link to your Backend Repository Here](YOUR_BACKEND_REPO_URL)
+    *   *Replace `YOUR_BACKEND_REPO_URL` with the actual link to your Express.js + MongoDB backend repository.*
 
 ---
 
