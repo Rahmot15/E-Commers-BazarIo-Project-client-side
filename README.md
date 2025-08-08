@@ -10,7 +10,7 @@ BazarIo is a full-featured web application designed to streamline local market p
 
 ## 📸 Project Overview
 
-![BazarIo Screenshot](https://i.ibb.co.com/rRbG5nqC/Screenshot-2025-08-08-182320.png)
+![BazarIo Screenshot](./public/webpic.png)
 *A clean screenshot of the BazarIo application's homepage/dashboard, showcasing its modern UI.*
 
 ---
