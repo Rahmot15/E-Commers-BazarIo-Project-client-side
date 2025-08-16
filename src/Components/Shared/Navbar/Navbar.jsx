@@ -161,7 +161,7 @@ const Navbar = () => {
               <input
                 type="checkbox"
                 className="theme-controller"
-                value="retro"
+                value="garden"
               />
 
               {/* sun icon */}
