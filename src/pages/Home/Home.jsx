@@ -6,6 +6,7 @@ import Steps from "../../Components/Steps";
 import StatsSection from "../../Components/StatsSection";
 import TestimonialSection from "../../Components/TestimonialSection";
 import NewsletterSection from "../../Components/NewsletterSection";
+import BestBenefitSection from "../../Components/BestBenefitSection";
 
 const Home = () => {
   return (
@@ -13,10 +14,12 @@ const Home = () => {
       <Banner />
       <Container />
       <Advertisement />
+      <BestBenefitSection/>
       <Steps />
       <TestimonialSection />
       <StatsSection />
       <NewsletterSection/>
+
     </div>
   );
 };
