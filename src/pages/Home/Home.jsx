@@ -4,6 +4,8 @@ import Banner from "../../Components/Banner";
 import Advertisement from "../../Components/Advertisement";
 import Steps from "../../Components/Steps";
 import StatsSection from "../../Components/StatsSection";
+import TestimonialSection from "../../Components/TestimonialSection";
+import NewsletterSection from "../../Components/NewsletterSection";
 
 const Home = () => {
   return (
@@ -11,8 +13,10 @@ const Home = () => {
       <Banner />
       <Container />
       <Advertisement />
-      <StatsSection />
       <Steps />
+      <TestimonialSection />
+      <StatsSection />
+      <NewsletterSection/>
     </div>
   );
 };

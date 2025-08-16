@@ -104,7 +104,7 @@ const ProductDetails = () => {
     submitReview(newReview);
   };
 
-  const isDisabled = role === "admin" || role === "seller";
+  const isDisabled = !user || role === "admin" || role === "seller" ;
 
   const { mutate: addToWatchlist } = useMutation({
     mutationFn: async (watchlistData) => {
@@ -239,7 +239,7 @@ const ProductDetails = () => {
       </div>
 
       {/* Price Chart */}
-      <div className="bg-base-100 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl p-6 mb-6 border border-base-200">
+      <div className="bg-base-100 dark:bg-gray-800/40 backdrop-blur-md rounded-2xl p-6 mb-6 border border-base-200">
         <h2 className="text-2xl font-bold text-base-content mb-4 flex items-center gap-2">
           <TrendingUp className="w-6 h-6" />
           Price Trends
@@ -304,7 +304,7 @@ const ProductDetails = () => {
                     <Star
                       className={`w-6 h-6 ${
                         star <= rating
-                          ? "text-secondary fill-current"
+                          ? "text-yellow-400 fill-current"
                           : "text-base-content/50"
                       }`}
                     />
@@ -318,7 +318,7 @@ const ProductDetails = () => {
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                className="w-full p-3 rounded-lg bg-base-100 text-base-content placeholder-base-content/50 border border-base-200"
+                className="w-full p-3 rounded-lg bg-base-200 text-base-content placeholder-base-content/50 border border-base-200"
                 placeholder="Share your thoughts about the price and quality..."
                 rows="3"
               />
@@ -367,7 +367,7 @@ const ProductDetails = () => {
                         key={star}
                         className={`w-4 h-4 ${
                           star <= review.rating
-                            ? "text-secondary fill-current"
+                            ? "text-yellow-400 fill-current"
                             : "text-base-content/50"
                         }`}
                       />

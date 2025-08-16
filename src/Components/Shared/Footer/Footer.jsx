@@ -14,7 +14,7 @@ import Logo from "../Logo/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-base-300 via-base-200 to-base-300 text-base-content">
+    <footer className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 text-white ">
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

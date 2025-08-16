@@ -139,7 +139,7 @@ const AllProducts = () => {
           {filteredAndSortedProducts.map((product) => (
             <div
               key={product._id}
-              className="bg-base-100 dark:bg-gray-800/10 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-white/20 dark:border-gray-700/50 overflow-hidden group"
+              className="bg-base-100 dark:bg-gray-800/20 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-white/20 dark:border-gray-700/50 overflow-hidden group"
             >
               {/* Product Image */}
               <div className="relative overflow-hidden">
@@ -156,7 +156,7 @@ const AllProducts = () => {
 
               {/* Product Info */}
               <div className="p-5">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-600 transition-colors duration-300">
                   {product.itemName}
                 </h3>
 

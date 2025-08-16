@@ -34,9 +34,9 @@ const Steps = () => {
   }, []);
 
   return (
-    <section className="bg-secondary py-16 px-2">
+    <section className="bg-base-100 py-16 px-2">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl bitter-font font-bold tracking-widest text-secondary-content mb-12">
+        <h2 className="text-3xl bitter-font font-bold tracking-widest text-base-content mb-12">
           HOW IT WORKS
         </h2>
 
@@ -59,18 +59,16 @@ const Steps = () => {
                 <span className="absolute -top-3 -left-3 bg-warning text-warning-content font-bold w-12 h-12 flex items-center justify-center rounded-full border-4 border-secondary text-2xl shadow">
                   {idx + 1}
                 </span>
-                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-base-100 rounded-full p-2 shadow-lg">
+                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-base-100 rounded-full p-2 shadow-lg text-base-content">
                   {step.icon}
                 </span>
               </div>
 
               <div data-aos="fade-up" data-aos-offset="100">
-                <h3 className="text-2xl font-semibold text-secondary-content mb-3">
+                <h3 className="text-2xl font-semibold text-base-content mb-3">
                   {step.title}
                 </h3>
-                <p className="text-secondary-content/90 text-base">
-                  {step.desc}
-                </p>
+                <p className="text-base-content/90 text-base">{step.desc}</p>
               </div>
             </div>
           ))}
