@@ -71,7 +71,7 @@ const Container = () => {
                   duration: 0.6,
                   delay: index * 0.1,
                 }}
-                className="bg-base-100 backdrop-blur-md rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-base-300"
+                className="bg-base-100 dark:bg-gray-800/10 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-base-300"
               >
                 {/* Product Image */}
                 <div className="relative h-48 overflow-hidden">
@@ -108,7 +108,7 @@ const Container = () => {
                     <h4 className="font-medium text-base-content mb-3">
                       Current Prices:
                     </h4>
-                    <div className="flex justify-between items-center py-2 px-3 bg-base-200 backdrop-blur-md rounded-lg">
+                    <div className="flex justify-between items-center py-2 px-3 bg-base-100 dark:bg-gray-800/20 backdrop-blur-md rounded-lg">
                       <div className="flex items-center gap-2">
                         <span className="text-lg">🛒</span>
                         <span className="text-base-content font-medium">

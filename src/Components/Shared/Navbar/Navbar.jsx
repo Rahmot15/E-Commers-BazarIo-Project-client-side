@@ -70,11 +70,12 @@ const Navbar = () => {
       <NavLink
         to="/allProducts"
         className={({ isActive }) =>
-          `flex items-center space-x-2 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200 ${
-            isActive
-              ? "text-primary bg-gray-100"
-              : "text-black hover:text-blue-600 hover:bg-gray-50"
-          }`
+          `flex items-center space-x-2 px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200
+    ${
+      isActive
+        ? "text-primary bg-gray-100 dark:bg-gray-700 dark:text-yellow-400"
+        : "text-black hover:text-blue-600 hover:bg-gray-50 dark:text-gray-200 dark:hover:text-blue-400 dark:hover:bg-gray-800"
+    }`
         }
       >
         <ShoppingBag className="h-4 w-4" />
@@ -85,7 +86,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 bg-white/10 backdrop-blur-lg border-b border-white/10 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 bg-black/30 backdrop-blur-lg border-b border-white/10 ${
         showNavbar ? "translate-y-0" : "-translate-y-full"
       }`}
     >

@@ -163,262 +163,261 @@ const ProductDetails = () => {
   }, [user, products, axiosSecure]);
 
   return (
-    <GradientAll>
-      <div className="max-w-6xl my-12 mx-auto relative z-10">
-        {/* Product Info */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
-          <div className="grid md:grid-cols-2 gap-6 items-center">
-            <div>
-              <img
-                src={products.image}
-                alt={products.itemName}
-                className="w-full h-64 object-cover rounded-xl shadow-lg"
-              />
-            </div>
-            <div className="text-white">
-              <h1 className="text-4xl font-bold mb-2">{products.itemName}</h1>
-              <p className="text-2xl font-semibold text-yellow-300 mb-4">
-                ${products.pricePerUnit}/kg
-              </p>
-
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-5 h-5" />
-                  <span className="text-lg">{products.marketName}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
-                  <span>{products.date}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  <span>Vendor: {products.vendorName}</span>
-                </div>
-              </div>
-
-              <p className="text-gray-200 mb-6">{products.itemDescription}</p>
-
-              <div className="flex gap-4">
-                <button
-                  onClick={handleAddToWatchlist}
-                  disabled={isDisabled}
-                  className={`p-2 rounded-full transition-colors ${
-                    isInWatchlist
-                      ? "bg-red-500 text-white"
-                      : "bg-gray-200 text-gray-600"
-                  }`}
-                >
-                  <Heart />
-                </button>
-
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  disabled={isDisabled}
-                  className="btn bg-green-500 hover:bg-green-600 text-white border-none disabled:opacity-50 flex items-center gap-2"
-                >
-                  <ShoppingCart size={18} />
-                  Buy Product
-                </button>
-
-                <PurchaseModal
-                  isOpen={isModalOpen}
-                  setIsOpen={setIsModalOpen}
-                  product={products}
-                />
-              </div>
-            </div>
+    <div className="max-w-6xl my-12 mx-auto relative z-10">
+      {/* Product Info */}
+      <div className="bg-base-100 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl p-6 mt-20 mb-6 border border-base-200">
+        <div className="grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <img
+              src={products.image}
+              alt={products.itemName}
+              className="w-full h-64 object-cover rounded-xl shadow-lg"
+            />
           </div>
-        </div>
+          <div className="text-base-content">
+            <h1 className="text-4xl font-bold mb-2">{products.itemName}</h1>
+            <p className="text-2xl font-semibold text-secondary mb-4">
+              ${products.pricePerUnit}/kg
+            </p>
 
-        {/* Market Description */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <MapPin className="w-6 h-6" />
-            About {products.marketName}
-          </h2>
-          <p className="text-gray-200">{products.marketDescription}</p>
-        </div>
-
-        {/* Price Chart */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <TrendingUp className="w-6 h-6" />
-            Price Trends
-          </h2>
-          {chartData.length > 0 ? (
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData}>
-                  <CartesianGrid
-                    strokeDasharray="3 3"
-                    stroke="rgba(255,255,255,0.2)"
-                  />
-                  <XAxis dataKey="date" stroke="white" />
-                  <YAxis stroke="white" />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "rgba(0,0,0,0.8)",
-                      border: "none",
-                      borderRadius: "8px",
-                      color: "white",
-                    }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="price"
-                    stroke="#fbbf24"
-                    strokeWidth={3}
-                    dot={{ fill: "#fbbf24", strokeWidth: 2, r: 6 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5" />
+                <span className="text-lg">{products.marketName}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                <span>{products.date}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <User className="w-5 h-5" />
+                <span>Vendor: {products.vendorName}</span>
+              </div>
             </div>
-          ) : (
-            <p className="text-gray-300">No historical data available</p>
-          )}
-        </div>
 
-        {/* Reviews Section */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
-          <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-            <MessageCircle className="w-6 h-6" />
-            Reviews & Comments
-          </h2>
+            <p className="text-base-content/70 mb-6">
+              {products.itemDescription}
+            </p>
 
-          {/* Add Review */}
-          {user && (
-            <div className="mb-6 p-4 bg-white/5 rounded-xl">
-              <h3 className="text-lg font-semibold text-white mb-4">
-                Share Your Experience
-              </h3>
-
-              <div className="mb-4">
-                <label className="block text-white mb-2">Rating</label>
-                <div className="flex gap-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      type="button"
-                      onClick={() => setRating(star)}
-                      className="text-2xl"
-                    >
-                      <Star
-                        className={`w-6 h-6 ${
-                          star <= rating
-                            ? "text-yellow-400 fill-current"
-                            : "text-gray-400"
-                        }`}
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-white mb-2">Comment</label>
-                <textarea
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  className="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-300 border border-white/20"
-                  placeholder="Share your thoughts about the price and quality..."
-                  rows="3"
-                />
-              </div>
+            <div className="flex gap-4">
+              <button
+                onClick={handleAddToWatchlist}
+                disabled={isDisabled}
+                className={`btn btn-circle ${
+                  isInWatchlist ? "btn-error" : "btn-ghost"
+                }`}
+              >
+                <Heart />
+              </button>
 
               <button
-                onClick={handleSubmitReview}
-                disabled={user?.email === products.vendorEmail}
-                className="btn bg-blue-500 hover:bg-blue-600 text-white border-none"
+                onClick={() => setIsModalOpen(true)}
+                disabled={isDisabled}
+                className="btn btn-success disabled:opacity-50 flex items-center gap-2"
               >
-                Submit Review
+                <ShoppingCart size={18} />
+                Buy Product
               </button>
-            </div>
-          )}
 
-          {/* Review List */}
-          <div className="space-y-4">
-            {loadingReviews ? (
-              <p className="text-white">Loading reviews...</p>
-            ) : reviews.length === 0 ? (
-              <p className="text-gray-300">No reviews yet. Be the first!</p>
-            ) : (
-              reviews.map((review) => (
-                <div key={review._id} className="p-4 bg-white/5 rounded-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
-                    <div>
-                      <h4 className="font-semibold text-white">
-                        {review.userName}
-                      </h4>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-sm text-gray-300">
-                        <div className="flex items-center gap-1">
-                          <Mail className="w-4 h-4" />
-                          <span>{review.userEmail}</span>
-                        </div>
-                        <div className="flex items-center gap-1 sm:ml-4">
-                          <Clock className="w-4 h-4" />
-                          <span>{review.date}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex sm:justify-end gap-1 mt-1 sm:mt-0">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={`w-4 h-4 ${
-                            star <= review.rating
-                              ? "text-yellow-400 fill-current"
-                              : "text-gray-400"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-gray-200">{review.comment}</p>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-        {/* Vendor Info */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <User className="w-6 h-6" />
-            Vendor Information
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4 text-white">
-            <div>
-              <p className="mb-2">
-                <span className="font-semibold">Name:</span>{" "}
-                {products.vendorName}
-              </p>
-              <p className="mb-2">
-                <span className="font-semibold">Email:</span>{" "}
-                {products.vendorEmail}
-              </p>
-            </div>
-            <div>
-              <p className="mb-2">
-                <span className="font-semibold">Market:</span>{" "}
-                {products.marketName}
-              </p>
-              <p className="mb-2">
-                <span className="font-semibold">Status:</span>
-                <span
-                  className={`ml-2 px-2 py-1 rounded text-sm ${
-                    products.status === "pending"
-                      ? "bg-yellow-500"
-                      : "bg-green-500"
-                  }`}
-                >
-                  {products.status}
-                </span>
-              </p>
+              <PurchaseModal
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+                product={products}
+              />
             </div>
           </div>
         </div>
       </div>
-    </GradientAll>
+
+      {/* Market Description */}
+      <div className="bg-base-100 dark:bg-gray-800/20 rounded-2xl p-6 mb-6 border border-base-200">
+        <h2 className="text-2xl font-bold text-base-content mb-4 flex items-center gap-2">
+          <MapPin className="w-6 h-6" />
+          About {products.marketName}
+        </h2>
+        <p className="text-base-content/70">{products.marketDescription}</p>
+      </div>
+
+      {/* Price Chart */}
+      <div className="bg-base-100 dark:bg-gray-800/20 backdrop-blur-md rounded-2xl p-6 mb-6 border border-base-200">
+        <h2 className="text-2xl font-bold text-base-content mb-4 flex items-center gap-2">
+          <TrendingUp className="w-6 h-6" />
+          Price Trends
+        </h2>
+        {chartData.length > 0 ? (
+          <div className="h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="rgba(255,255,255,0.2)"
+                />
+                <XAxis dataKey="date" stroke="#ffffff" />
+                <YAxis stroke="#ffffff" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "rgba(0,0,0,0.8)",
+                    border: "none",
+                    borderRadius: "8px",
+                    color: "#ffffff",
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="price"
+                  stroke="#fbbf24" // Yellow-300 Tailwind equivalent
+                  strokeWidth={3}
+                  dot={{ fill: "#fbbf24", strokeWidth: 2, r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        ) : (
+          <p className="text-base-content/70">No historical data available</p>
+        )}
+      </div>
+
+      {/* Reviews Section */}
+      <div className="bg-base-100 dark:bg-gray-800/20 rounded-2xl p-6 mb-6 border border-base-200">
+        <h2 className="text-2xl font-bold text-base-content mb-6 flex items-center gap-2">
+          <MessageCircle className="w-6 h-6" />
+          Reviews & Comments
+        </h2>
+
+        {/* Add Review */}
+        {user && (
+          <div className="mb-6 p-4 bg-base-200/50 rounded-xl">
+            <h3 className="text-lg font-semibold text-base-content mb-4">
+              Share Your Experience
+            </h3>
+
+            <div className="mb-4">
+              <label className="block text-base-content mb-2">Rating</label>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setRating(star)}
+                    className="text-2xl"
+                  >
+                    <Star
+                      className={`w-6 h-6 ${
+                        star <= rating
+                          ? "text-secondary fill-current"
+                          : "text-base-content/50"
+                      }`}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-base-content mb-2">Comment</label>
+              <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="w-full p-3 rounded-lg bg-base-100 text-base-content placeholder-base-content/50 border border-base-200"
+                placeholder="Share your thoughts about the price and quality..."
+                rows="3"
+              />
+            </div>
+
+            <button
+              onClick={handleSubmitReview}
+              disabled={user?.email === products.vendorEmail}
+              className="btn btn-primary"
+            >
+              Submit Review
+            </button>
+          </div>
+        )}
+
+        {/* Review List */}
+        <div className="space-y-4">
+          {loadingReviews ? (
+            <p className="text-base-content">Loading reviews...</p>
+          ) : reviews.length === 0 ? (
+            <p className="text-base-content/70">
+              No reviews yet. Be the first!
+            </p>
+          ) : (
+            reviews.map((review) => (
+              <div key={review._id} className="p-4 bg-base-200/50 rounded-xl">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-2 gap-2">
+                  <div>
+                    <h4 className="font-semibold text-base-content">
+                      {review.userName}
+                    </h4>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-1 text-sm text-base-content/70">
+                      <div className="flex items-center gap-1">
+                        <Mail className="w-4 h-4" />
+                        <span>{review.userEmail}</span>
+                      </div>
+                      <div className="flex items-center gap-1 sm:ml-4">
+                        <Clock className="w-4 h-4" />
+                        <span>{review.date}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex sm:justify-end gap-1 mt-1 sm:mt-0">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`w-4 h-4 ${
+                          star <= review.rating
+                            ? "text-secondary fill-current"
+                            : "text-base-content/50"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-base-content/80">{review.comment}</p>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Vendor Info */}
+      <div className="bg-base-100 dark:bg-gray-800/20 rounded-2xl p-6 border border-base-200">
+        <h2 className="text-2xl font-bold text-base-content mb-4 flex items-center gap-2">
+          <User className="w-6 h-6" />
+          Vendor Information
+        </h2>
+        <div className="grid md:grid-cols-2 gap-4 text-base-content">
+          <div>
+            <p className="mb-2">
+              <span className="font-semibold">Name:</span> {products.vendorName}
+            </p>
+            <p className="mb-2">
+              <span className="font-semibold">Email:</span>{" "}
+              {products.vendorEmail}
+            </p>
+          </div>
+          <div>
+            <p className="mb-2">
+              <span className="font-semibold">Market:</span>{" "}
+              {products.marketName}
+            </p>
+            <p className="mb-2">
+              <span className="font-semibold">Status:</span>
+              <span
+                className={`ml-2 px-2 py-1 rounded text-sm ${
+                  products.status === "pending"
+                    ? "bg-warning text-warning-content"
+                    : "bg-success text-success-content"
+                }`}
+              >
+                {products.status}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
