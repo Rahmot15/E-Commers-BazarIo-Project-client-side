@@ -1,7 +1,5 @@
 import { ShoppingBasket, Truck, HeartHandshake } from "lucide-react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router";
 
 const steps = [
@@ -26,13 +24,6 @@ const steps = [
 ];
 
 const Steps = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      once: true,
-    });
-  }, []);
-
   return (
     <section className="bg-base-100 py-16 px-2">
       <div className="max-w-6xl mx-auto text-center">
@@ -42,15 +33,15 @@ const Steps = () => {
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-12 mb-8">
           {steps.map((step, idx) => (
-            <div
+            <motion.div
               key={idx}
               className="flex flex-col items-center w-full md:w-1/3"
+              initial={{ opacity: 0, y: 80 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: idx * 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
             >
-              <div
-                data-aos="fade-down"
-                data-aos-offset="100"
-                className="relative mb-6"
-              >
+              <div className="relative mb-6">
                 <img
                   src={step.img}
                   alt={step.title}
@@ -64,22 +55,29 @@ const Steps = () => {
                 </span>
               </div>
 
-              <div data-aos="fade-up" data-aos-offset="100">
+              <div>
                 <h3 className="text-2xl font-semibold text-base-content mb-3">
                   {step.title}
                 </h3>
                 <p className="text-base-content/90 text-base">{step.desc}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        <Link
-          to={"allProducts"}
-          className="btn btn-warning text-lg font-semibold px-8 rounded-full shadow mt-4"
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, amount: 0.2 }}
         >
-          Start Shopping
-        </Link>
+          <Link
+            to={"allProducts"}
+            className="btn btn-warning text-lg font-semibold px-8 rounded-full shadow mt-4"
+          >
+            Start Shopping
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

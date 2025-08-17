@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Star, Quote } from "lucide-react";
+import { motion } from "framer-motion";
 
 const TestimonialSection = () => {
   const testimonials = [
@@ -95,129 +96,152 @@ const TestimonialSection = () => {
 
   return (
     <section className="bg-base-200 py-20 px-4 lg:px-8">
-  <div className="max-w-7xl mx-auto">
-    {/* Header */}
-    <div className="text-center mb-16">
-      <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
-          What Our <span className="text-primary">Users Say</span>
-        </h2>
-      <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
-        Discover how Daily Price Tracker is helping thousands of users make
-        smarter shopping decisions and vendors grow their business
-      </p>
-    </div>
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+            What Our <span className="text-primary">Users Say</span>
+          </h2>
+          <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
+            Discover how Daily Price Tracker is helping thousands of users make
+            smarter shopping decisions and vendors grow their business
+          </p>
+        </motion.div>
 
-    {/* Testimonials Slider */}
-    <div className="relative">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={30}
-        slidesPerView={1}
-        breakpoints={{
-          640: { slidesPerView: 1, spaceBetween: 20 },
-          768: { slidesPerView: 2, spaceBetween: 30 },
-          1024: { slidesPerView: 3, spaceBetween: 30 },
-        }}
-        navigation={{
-          nextEl: ".swiper-button-next-custom",
-          prevEl: ".swiper-button-prev-custom",
-        }}
-        pagination={{
-          clickable: true,
-          bulletClass: "swiper-pagination-bullet bg-primary",
-          bulletActiveClass: "swiper-pagination-bullet-active bg-secondary",
-        }}
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
-        loop={true}
-        className="testimonial-swiper pb-12"
-      >
-        {testimonials.map((testimonial) => (
-          <SwiperSlide key={testimonial.id}>
-            <div className="bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-full rounded-2xl">
-              {/* Quote Icon */}
-              <div className="flex justify-center mb-6">
-                <Quote className="w-8 h-8 text-primary" />
-              </div>
+        {/* Testimonials Slider */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+        >
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={30}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 1, spaceBetween: 20 },
+              768: { slidesPerView: 2, spaceBetween: 30 },
+              1024: { slidesPerView: 3, spaceBetween: 30 },
+            }}
+            navigation={{
+              nextEl: ".swiper-button-next-custom",
+              prevEl: ".swiper-button-prev-custom",
+            }}
+            pagination={{
+              clickable: true,
+              bulletClass: "swiper-pagination-bullet bg-primary",
+              bulletActiveClass: "swiper-pagination-bullet-active bg-secondary",
+            }}
+            autoplay={{ delay: 4000, disableOnInteraction: false }}
+            loop={true}
+            className="testimonial-swiper pb-12"
+          >
+            {testimonials.map((testimonial, idx) => (
+              <SwiperSlide key={testimonial.id}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: idx * 0.2 }}
+                  viewport={{ once: false }}
+                >
+                  <div className="bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-full rounded-2xl">
+                    {/* Quote Icon */}
+                    <div className="flex justify-center mb-6">
+                      <Quote className="w-8 h-8 text-primary" />
+                    </div>
 
-              {/* User Image */}
-              <div className="flex justify-center mb-6">
-                <div className="relative">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-20 h-20 rounded-full object-cover border-4 border-base-200"
-                  />
-                  <div className="absolute -bottom-2 -right-2 bg-primary text-base-100 rounded-full p-1">
-                    <Star className="w-4 h-4 fill-current" />
+                    {/* User Image */}
+                    <div className="flex justify-center mb-6">
+                      <div className="relative">
+                        <img
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          className="w-20 h-20 rounded-full object-cover border-4 border-base-200"
+                        />
+                        <div className="absolute -bottom-2 -right-2 bg-primary text-base-100 rounded-full p-1">
+                          <Star className="w-4 h-4 fill-current" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Feedback */}
+                    <div className="text-center mb-6">
+                      <p className="text-base-content/70 leading-relaxed text-base italic line-clamp-3">
+                        "{testimonial.feedback}"
+                      </p>
+                    </div>
+
+                    {/* Rating */}
+                    <div className="flex justify-center mb-4">
+                      <div className="flex space-x-1">
+                        {renderStars(testimonial.rating)}
+                      </div>
+                    </div>
+
+                    {/* User Info */}
+                    <div className="text-center">
+                      <h4 className="font-semibold text-base-content text-lg mb-1">
+                        {testimonial.name}
+                      </h4>
+                      <p className="text-primary font-medium mb-1">
+                        {testimonial.role}
+                      </p>
+                      <p className="text-base-content/60 text-sm mb-3">
+                        📍 {testimonial.location}
+                      </p>
+                      <div className="inline-flex items-center px-3 py-1 bg-base-200 text-base-content rounded-full text-xs font-medium">
+                        {testimonial.platform}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
-              {/* Feedback */}
-              <div className="text-center mb-6">
-                <p className="text-base-content/70 leading-relaxed text-base italic line-clamp-3">
-                  "{testimonial.feedback}"
-                </p>
-              </div>
-
-              {/* Rating */}
-              <div className="flex justify-center mb-4">
-                <div className="flex space-x-1">{renderStars(testimonial.rating)}</div>
-              </div>
-
-              {/* User Info */}
-              <div className="text-center">
-                <h4 className="font-semibold text-base-content text-lg mb-1">
-                  {testimonial.name}
-                </h4>
-                <p className="text-primary font-medium mb-1">{testimonial.role}</p>
-                <p className="text-base-content/60 text-sm mb-3">📍 {testimonial.location}</p>
-                <div className="inline-flex items-center px-3 py-1 bg-base-200 text-base-content rounded-full text-xs font-medium">
-                  {testimonial.platform}
-                </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      {/* Custom Navigation Buttons */}
-      <div className="flex justify-center items-center space-x-4 mt-8">
-        <button className="swiper-button-prev-custom bg-base-100 hover:bg-primary hover:text-base-100 text-primary rounded-full p-3 shadow-lg transition-all duration-300 border border-base-200">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
-        <button className="swiper-button-next-custom bg-base-100 hover:bg-primary hover:text-base-100 text-primary rounded-full p-3 shadow-lg transition-all duration-300 border border-base-200">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
+          {/* Custom Navigation Buttons */}
+          <div className="flex justify-center items-center space-x-4 mt-8">
+            <button className="swiper-button-prev-custom bg-base-100 hover:bg-primary hover:text-base-100 text-primary rounded-full p-3 shadow-lg transition-all duration-300 border border-base-200">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button className="swiper-button-next-custom bg-base-100 hover:bg-primary hover:text-base-100 text-primary rounded-full p-3 shadow-lg transition-all duration-300 border border-base-200">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+        </motion.div>
       </div>
-    </div>
-  </div>
-</section>
-
+    </section>
   );
 };
 
