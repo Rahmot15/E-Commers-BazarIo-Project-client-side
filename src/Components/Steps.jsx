@@ -36,8 +36,8 @@ const Steps = () => {
   return (
     <section className="bg-base-100 py-16 px-2">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl bitter-font font-bold tracking-widest text-base-content mb-12">
-          HOW IT WORKS
+        <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-20">
+          How It <span className="text-primary">Works</span>
         </h2>
 
         <div className="flex flex-col md:flex-row justify-center items-center gap-12 mb-8">

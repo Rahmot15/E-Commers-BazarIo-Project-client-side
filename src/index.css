@@ -4,6 +4,14 @@
   themes: light --default, dark --prefersdark, night, garden ;
 }
 
+@plugin "daisyui/theme" {
+  name: "garden";
+  default: true;
+  /* --color-secondary: #055E68; */
+  --color-primary: #9333EA;
+}
+
+
 .bitter-font {
   font-family: "Bitter", serif;
   font-weight: 600;

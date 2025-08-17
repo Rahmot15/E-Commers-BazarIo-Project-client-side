@@ -27,10 +27,10 @@ const Advertisement = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 md:py-20">
       <div className="text-center mb-12">
-        <h1 className="text-4xl bitter-font md:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-4">
-          Special Offers & Promotions
-        </h1>
-        <p className="text-lg parkinsans-font text-gray-300 max-w-2xl mx-auto">
+        <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+          Special Offers & <span className="text-primary">Promotions</span>
+        </h2>
+        <p className="text-lg parkinsans-font text-gray-500 max-w-2xl mx-auto">
           Check out the latest offers and promotions from our trusted sellers
         </p>
       </div>
@@ -103,10 +103,16 @@ const Advertisement = () => {
                     </div>
                   </div>
                   <div className="flex gap-4">
-                    <Link to={'allProducts'} className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 flex items-center gap-2 transform hover:scale-105">
+                    <Link
+                      to={"allProducts"}
+                      className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 flex items-center gap-2 transform hover:scale-105"
+                    >
                       <ExternalLink size={20} /> Shop Now
                     </Link>
-                    <Link to={'allProducts'} className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white/30">
+                    <Link
+                      to={"allProducts"}
+                      className="bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold py-3 px-8 rounded-xl transition-all duration-300 hover:bg-white/30"
+                    >
                       View Offer
                     </Link>
                   </div>

@@ -98,9 +98,9 @@ const TestimonialSection = () => {
   <div className="max-w-7xl mx-auto">
     {/* Header */}
     <div className="text-center mb-16">
-      <h2 className="text-4xl lg:text-5xl font-bold text-base-content mb-4">
-        What Our Users Say
-      </h2>
+      <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+          What Our <span className="text-primary">Users Say</span>
+        </h2>
       <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
         Discover how Daily Price Tracker is helping thousands of users make
         smarter shopping decisions and vendors grow their business

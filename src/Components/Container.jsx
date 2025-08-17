@@ -47,9 +47,9 @@ const Container = () => {
     <div className="py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl bitter-font font-bold text-base-content mb-4">
-            Today's Market Prices
-          </h1>
+          <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+            Today's Market <span className="text-primary">Prices</span>
+          </h2>
           <p className="text-lg parkinsans-font text-base-content/70 max-w-2xl mx-auto">
             Get the latest prices from different markets across the city.
           </p>

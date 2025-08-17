@@ -51,10 +51,11 @@ const AllProducts = () => {
     <div className="min-h-screen ">
       {/* Header */}
       <div className="container mx-auto px-4 py-6 text-center">
-        <h1 className="text-4xl font-bold bitter-font bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
-          🛍️ All Products
-        </h1>
-        <p className="text-base-content parkinsans-font text-lg">
+
+        <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+          🛍️ All <span className="text-primary">Products</span>
+        </h2>
+        <p className="text-base-400 parkinsans-font text-lg">
           List of latest products from all markets
         </p>
       </div>
@@ -192,7 +193,7 @@ const AllProducts = () => {
                 {/* View Details Button */}
                 <Link
                   to={`/productDetails/${product._id}`}
-                  className="w-full mt-4 flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="w-full mt-4 flex items-center justify-center space-x-2 px-4 py-3 btn  btn-primary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   <Eye className="w-4 h-4 bitter-font" />
                   <span>See Details</span>

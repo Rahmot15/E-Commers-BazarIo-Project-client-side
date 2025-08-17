@@ -129,7 +129,7 @@ const Navbar = () => {
                   )}
 
                   <ChevronDown
-                    className={`h-6 w-6 transition-transform duration-200 ${
+                    className={`h-8 w-8 text-gray-300 transition-transform duration-200 ${
                       dropdownOpen ? "rotate-180" : ""
                     }`}
                   />
