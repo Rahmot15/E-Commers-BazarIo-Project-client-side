@@ -15,7 +15,7 @@ const Banner = () => {
         transition={{ duration: 2.5, ease: "easeOut" }}
       />
 
-      <div className="absolute inset-0 bg-black/30 z-[-1]"></div>
+      <div className="absolute inset-0 bg-black/20 z-[-1]"></div>
 
       {/* Centered Content */}
       <motion.div
@@ -57,17 +57,6 @@ const Banner = () => {
           </Link>
         </motion.div>
       </motion.div>
-
-      <motion.div
-        className="absolute top-10 left-10 w-16 h-16 rounded-full bg-yellow-400/40"
-        animate={{ y: [0, 15, 0] }}
-        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-20 w-24 h-24 rounded-full bg-green-400/30"
-        animate={{ y: [0, -20, 0] }}
-        transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
-      />
     </div>
   );
 };

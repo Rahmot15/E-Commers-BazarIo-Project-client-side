@@ -17,8 +17,8 @@ const Home = () => {
       <BestBenefitSection/>
       <Steps />
       <TestimonialSection />
-      <StatsSection />
       <NewsletterSection/>
+      <StatsSection />
 
     </div>
   );
