@@ -90,7 +90,7 @@ const Navbar = () => {
         showNavbar ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="w-11/12 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-11/12 mx-auto px-0 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left Section - Logo & Brand */}
           <Logo />
@@ -203,7 +203,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
+        <div className="md:hidden bg-white border-t border-gray-200 z-50">
           <div className="px-2 pt-2 pb-3 space-y-1">{links}</div>
         </div>
       )}

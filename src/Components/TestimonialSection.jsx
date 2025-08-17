@@ -180,9 +180,7 @@ const TestimonialSection = () => {
 
                     {/* Rating */}
                     <div className="flex justify-center mb-4">
-                      <div className="flex space-x-1">
-                        {renderStars(testimonial.rating)}
-                      </div>
+                      <div className="flex space-x-1">{renderStars(testimonial.rating)}</div>
                     </div>
 
                     {/* User Info */}
@@ -190,9 +188,7 @@ const TestimonialSection = () => {
                       <h4 className="font-semibold text-base-content text-lg mb-1">
                         {testimonial.name}
                       </h4>
-                      <p className="text-primary font-medium mb-1">
-                        {testimonial.role}
-                      </p>
+                      <p className="text-primary font-medium mb-1">{testimonial.role}</p>
                       <p className="text-base-content/60 text-sm mb-3">
                         📍 {testimonial.location}
                       </p>
